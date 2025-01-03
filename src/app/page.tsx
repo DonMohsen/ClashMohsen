@@ -1,8 +1,79 @@
+"use client";
 import Image from "next/image";
+import Link from "next/link";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import ReactQueryProvider from "@/providers/ReactQueryProvider";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import ClipLoader from "react-spinners/ClipLoader";
+import { CircleAlert, CircleCheck, RotateCcw } from "lucide-react";
 
 export default function Home() {
+  const [inputCondition, setInputCondition] = useState("");
+  const [isTherePlayer, setIsTherePlayer] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [tag, setTag] = useState("");
+  useEffect(() => {
+    if (isTherePlayer === true) {
+      setInputCondition("Player Found!");
+    } else {
+      setInputCondition("No Player Found");
+    }
+  }, [isLoading]);
+  useEffect(() => {
+   if (isTherePlayer) {
+    setInputCondition("No Player Found")
+    setIsTherePlayer(false)
+   }
+  }, [tag])
+  
+  useEffect(() => {
+    setTag("");
+    setInputCondition("");
+  }, []);
+
+  const queryClient = useQueryClient();
+  const router = useRouter();
+  //   const{data,isLoading,error}=useQuery<any>({
+  //     queryKey:['isThereAPlayerOrNot'],
+  //     queryFn: async () => {
+  //         const response = await fetch(`http://localhost:5000/api/coc/player/%${tag}`);
+
+  //         return response.json(); // Parse JSON data here
+  //     }
+  // });
+  const handlePlayerFetch = async () => {
+    try {
+      setIsTherePlayer(false);
+      setIsLoading(true);
+      const playerInfo = await fetch(
+        `http://localhost:5000/api/coc/player/${tag}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${process.env.COC_API_TOKEN}`,
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await playerInfo.json();
+      if (!data.tag) {
+        console.log("No res!!");
+        setIsTherePlayer(false);
+      } else {
+        setIsTherePlayer(true);
+        // router.push(`/Player/${tag}`)
+      }
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
+    <div className="flex min-h-screen flex-col items-center justify-between p-24 ">
       <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
         <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
           Get started by editing&nbsp;
@@ -40,31 +111,50 @@ export default function Home() {
       </div>
 
       <div className="mb-32 grid text-center lg:mb-0 lg:w-full lg:max-w-5xl lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className="mb-3 text-2xl font-semibold">
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className="m-0 max-w-[30ch] text-sm opacity-50">
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+        <div className="rounded-2xl border border-transparent px-5 py-4 transition-colors hover:border-gray-300 bg-gray-100 hover:bg-slate-200 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30">
+          <div className="flex items-center justify-center w-full">
+            <Input
+              onChange={(e) => setTag(e.target.value)}
+              className="fill-slate-200 border-slate-400"
+              placeholder="#AAAAAA"
+            />
+            <Button
+            disabled={isLoading||tag.length>=10||tag.length<=5}
+              onClick={() => handlePlayerFetch()}
+              className="w-[40%] text-wrap text-sm bg-transparent text-blue-600 shadow-none border-blue-500 border hover:bg-blue-200"
+            >
+              {isLoading ? (
+                <div className="h-5 w-5 animate-spin rounded-full border-2 border-blue-500 border-t-transparent"></div>
+              ) : (
+                inputCondition==="No Player Found"?<RotateCcw  />:inputCondition==="Player Found!"?<CircleCheck />:"Check!"
+              )}
+            </Button>
+          </div>
+          <div
+            className="group"
+
+            // target="_blank"
+            // rel="noopener noreferrer"
+          >
+            <h2 className="mb-3 text-2xl font-semibold ">
+              Player{" "}
+              <span className="inline-block transition-transform motion-reduce:transform-none group-hover:translate-x-1">
+                -&gt;
+              </span>
+            </h2>
+            <p className="m-0 max-w-[30ch] text-sm opacity-50">
+              Type your account tag
+            </p>
+          </div>
+        </div>
 
         <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
+          href="/herotest"
           className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
+        
         >
           <h2 className="mb-3 text-2xl font-semibold">
-            Learn{" "}
+            Test{" "}
             <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
               -&gt;
             </span>
@@ -108,6 +198,6 @@ export default function Home() {
           </p>
         </a>
       </div>
-    </main>
+    </div>
   );
 }
