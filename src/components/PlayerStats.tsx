@@ -5,11 +5,12 @@ import React from 'react'
 import { usePlayerByTag } from '@/hooks/usePlayerByTag'
 
 type PlayerStatsProps = {
-  tag: string | string[]
+  tag: string
+  game:string
 }
 
-const PlayerStats: React.FC<PlayerStatsProps> = ({ tag }) => {
-  const { data, isLoading, error } = usePlayerByTag(tag)
+const PlayerStats: React.FC<PlayerStatsProps> = ({ tag ,game}) => {
+  const { data, isLoading, error } = usePlayerByTag(tag,game)
 
   if (isLoading) return <p className="text-gray-500">Loading stats...</p>
   if (error) return <p className="text-red-500">Error: {error.message}</p>

@@ -7,7 +7,7 @@ import SearchBar from "@/components/SearchBar";
 import clsx from "clsx";
 import { GameType } from "@/types/data-types";
 
-const HomePage = () => {
+const CocPlayerPage = () => {
   const [game, setGame] = useState<GameType>(GameType.coc);
 
   const toggleGame = () => {
@@ -56,4 +56,4 @@ const HomePage = () => {
   );
 };
 
-export default HomePage;
+export default CocPlayerPage;

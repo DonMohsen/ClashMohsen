@@ -11,7 +11,7 @@ interface PlayerData {
   [key: string]: any
 }
 
-export function usePlayerByTag(tag: string | string[]) {
+export function usePlayerByTag(tag: string,game:string) {
   const [data, setData] = useState<PlayerData | null>(null)
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
@@ -23,7 +23,7 @@ export function usePlayerByTag(tag: string | string[]) {
     setError(null)
 
     axios
-      .get(`/api/player/${tag}`)
+      .get(`/api/${game}/player/${tag}`)
       .then((res) => {
         setData(res.data)
       })

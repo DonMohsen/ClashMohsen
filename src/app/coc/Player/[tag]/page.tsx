@@ -8,7 +8,7 @@ type Props = {
   params: Promise<{ tag: string }>;
 }
 
-const PlayerPage =async ({ params }: Props) => {
+const CocSinglePlayerPage =async ({ params }: Props) => {
     const playerTag = (await params).tag;
   // const player=await getPlayerByTag(playerTag);
     // if (!player) return notFound();
@@ -18,9 +18,9 @@ const PlayerPage =async ({ params }: Props) => {
     {/* {player&&
     player.name
     } */}
-      <PlayerStats tag={playerTag} />
+      <PlayerStats tag={playerTag} game='coc' />
     </>
   )
 }
 
-export default PlayerPage
+export default CocSinglePlayerPage
