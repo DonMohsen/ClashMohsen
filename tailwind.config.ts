@@ -17,7 +17,9 @@ const config: Config = {
 		  },
 		fontFamily: {
 			SupercellHeadline: 'SupercellHeadline',
-			SupercellTextMedium:'SupercellTextMedium'
+			SupercellTextMedium:'SupercellTextMedium',
+		 ClashBold: ['ClashBold', 'sans-serif'],
+
 		  },
   		backgroundImage: {
   			'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
