@@ -1,33 +1,20 @@
-"use client"
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import React from 'react'
+'use client'
 
-const PlayerSearch = ({tag}:{tag:string|string[]}) => {
-    const queryClient=useQueryClient();
-    const{data,isLoading,error}=useQuery<any>({
-        queryKey:['playerSearchByTag'],
-        queryFn: async () => {
-            const response = await fetch(`http://localhost:5000/api/coc/player/${tag}`);
-            if (!response.ok) {
-                throw new Error("Network response was not ok");
-            }
-            return response.json(); // Parse JSON data here
-        }
-    });
-    console.log(data);
-    
+import React from 'react'
+import { usePlayerByTag } from '@/hooks/usePlayerByTag'
+import { notFound } from 'next/navigation'
+
+const PlayerSearch = ({ tag }: { tag: string | string[] }) => {
+  const { data, isLoading, error } = usePlayerByTag(tag)
+    if (!data) return notFound();
+
   return (
     <div>
-        <h1>
-            {isLoading&&
-                        `Hi ...  you are Town Hall 00  Level:...`
-
-            }
-            {data&&
-            
-            `Hi ${data.name} you are Town Hall ${data.townHallLevel} Level:${data.expLevel}`
-            }
-        </h1>
+      <h1>
+        {isLoading && `Hi ...  you are level 00  with ... wins!!`}
+        {error && `Oops! ${error.message}`}
+        {data && `Hi ${data.name} you are level ${data.expLevel} with ${data.wins} wins!!`}
+      </h1>
     </div>
   )
 }

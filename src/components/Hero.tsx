@@ -5,16 +5,12 @@ import Image from 'next/image'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
 import { Search } from 'lucide-react'
-import { useFetchPlayerByTag } from '@/hooks/useFetchPlayerByTag'
 const Hero = () => {  
     const [tag, setTag] = useState("p");
-    const{error,isLoading,player,refetch}=useFetchPlayerByTag(tag);
 
     const handleFetchPlayerByTag=async(e: React.FormEvent<HTMLFormElement>)=>{
       e.preventDefault();
     if (tag) {
-      refetch(); // Trigger the React Query refetch manually
-      //!for later: reactquery is shit for here ...do the easy fetch by hand!! then create custom hook actually
       console.log(tag);
       
     }

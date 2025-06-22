@@ -1,18 +1,25 @@
-"use client"
-import ReactQueryProvider from '@/providers/ReactQueryProvider'
 import React from 'react'
-import { useParams } from 'next/navigation'
 import PlayerSearch from '@/components/PlayerSearch'
+import { getPlayerByTag } from '@/actions/getPlayerByTag';
+import { notFound } from 'next/navigation';
+import PlayerStats from '@/components/PlayerStats';
 
-const PlayerPage = () => {
-    const {tag}=useParams();
-    console.log(tag);
-    
+type Props = {
+  params: Promise<{ tag: string }>;
+}
+
+const PlayerPage =async ({ params }: Props) => {
+    const playerTag = (await params).tag;
+  // const player=await getPlayerByTag(playerTag);
+    // if (!player) return notFound();
+
   return (
-
-    <ReactQueryProvider>
-        <PlayerSearch tag={tag}/>
-    </ReactQueryProvider>
+    <>
+    {/* {player&&
+    player.name
+    } */}
+      <PlayerStats tag={playerTag} />
+    </>
   )
 }
 
