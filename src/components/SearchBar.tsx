@@ -38,7 +38,7 @@ export default function SearchBar() {
             <Button
             className='text-white font-light text-xs absolute right-0 bg-blue-400 hover:bg-blue-200 rounded-xl border-none w-[20%] '
             ><Search /></Button>
-            <span className='text-xl absolute left-4 text-black'>#</span>
+            <span className='text-xl absolute left-6 text-black'>#</span>
           </form>
             {/* <Button className='w-[40%] mt-5 bg-purple-600 hover:bg-purple-400 rounded-xl'>
             Login/Signup

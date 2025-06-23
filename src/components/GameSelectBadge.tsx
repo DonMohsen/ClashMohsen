@@ -13,7 +13,7 @@ const GameSelectBadge = () => {
      <div
         className={clsx(`w-14 h-14 bg-gradient-to-br  rounded-xl cursor-pointer shadow-md 
         border-green-700 flex items-center justify-center overflow-hidden`,
-          game===GameType.coc?' from-green-500 to-green-400':'from-sky-500 to-sky-400'
+          game===GameType.coc?' from-[#5D4037] to-[#90685c]':'from-[#0052CC]  to-[#5c9dff]'
         )
         }
         onClick={toggleGame}
@@ -29,7 +29,7 @@ const GameSelectBadge = () => {
               transition={{ duration: 0.1, ease: "easeInOut" }}
               className="w-8 h-8 flex items-center justify-center"
             >
-              <ClashIcon className="w-full h-full text-white stroke-[2.5]" />
+              <ClashIcon className="w-full h-full text-[#FFD700] stroke-[2.5]" />
             </motion.div>
           ) : (
             <motion.div
@@ -40,7 +40,7 @@ const GameSelectBadge = () => {
               transition={{ duration: 0.1, ease: "easeInOut" }}
               className="w-12 h-12 flex items-center justify-center"
             >
-              <RoyaleIcon className="w-full h-full text-white stroke-[1.5] scale-[1.3]" />
+              <RoyaleIcon className="w-full h-full text-[#FFD700] stroke-[1.5] scale-[1.3]" />
             </motion.div>
           )}
         </AnimatePresence>

@@ -10,30 +10,21 @@ export function usePlayerByTag(tag: string, game: GameType) {
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
 
-  // Get functions from store
-  const addPlayer = useBookmarkStore((s) => s.addPlayer)
-  const remove = useBookmarkStore((s) => s.removePlayer)
+  // Grab store actions
+  const addToStore = useBookmarkStore((s) => s.addPlayer)
+  const removeFromStore = useBookmarkStore((s) => s.removePlayer)
   const getPlayer = useBookmarkStore((s) => s.getPlayer)
 
-  // We get bookmarked player from store — but only to initialize or sync
-  const bookmarkedPlayer = getPlayer(tag, game)
-
   useEffect(() => {
-    if (!tag || !game) {
-      setData(null)
+    if (!tag || !game) return
+
+    const cached = getPlayer(tag, game)
+    if (cached) {
+      setData(cached)
       setIsLoading(false)
       return
     }
 
-    // If we already have bookmarked data, start with it
-    if (bookmarkedPlayer) {
-      setData(bookmarkedPlayer)
-      setIsLoading(false)
-      setError(null)
-      return
-    }
-
-    // Otherwise, fetch from API
     setIsLoading(true)
     setError(null)
 
@@ -41,34 +32,28 @@ export function usePlayerByTag(tag: string, game: GameType) {
       .get<ClashRoyalePlayerType>(`/api/${game}/player/${tag}`)
       .then((res) => {
         setData(res.data)
-        // Optionally, add to bookmarks if you want on load
-        // addPlayer(tag, game, res.data)
       })
       .catch((err) => {
         setError(err)
         setData(null)
       })
-      .finally(() => {
-        setIsLoading(false)
-      })
-  }, [tag, game, bookmarkedPlayer])
+      .finally(() => setIsLoading(false))
+  }, [tag, game])
 
-  // Wrap addPlayer and remove to also update local data if needed
-  const add = useCallback(() => {
-    if (data) addPlayer(tag, game, data)
-  }, [addPlayer, data, tag, game])
+  const addPlayer = useCallback(() => {
+    if (data) addToStore(tag, game, data)
+  }, [data, tag, game, addToStore])
 
-  const removeAndClear = useCallback(() => {
-    remove(tag, game)
-    // Optionally clear local data or keep it visible after removal
-    // setData(null)
-  }, [remove, tag, game])
+  const removePlayer = useCallback(() => {
+    removeFromStore(tag, game)
+    // don't clear local `data` – keep showing even after removal
+  }, [tag, game, removeFromStore])
 
   return {
     data,
     isLoading,
     error,
-    addPlayer: add,
-    removePlayer: removeAndClear,
+    addPlayer,
+    removePlayer,
   }
 }
