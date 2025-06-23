@@ -3,7 +3,7 @@ import PlayerSearch from '@/components/PlayerSearch'
 import { getPlayerByTag } from '@/actions/getPlayerByTag';
 import { notFound } from 'next/navigation';
 import PlayerStats from '@/components/PlayerStats';
-import { GameType } from '@/types/data-types';
+import { GameType } from '@/types/data.types';
 
 type Props = {
   params: Promise<{ tag: string }>;

@@ -1,39 +1,74 @@
-// hooks/usePlayerByTag.ts
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
+import { ClashRoyalePlayerType } from '@/types/data.types'
+import { useBookmarkStore } from '@/store/useBookmarkStore'
 
-interface PlayerData {
-  name: string
-  expLevel: number
-  wins: number
-  [key: string]: any
-}
-
-export function usePlayerByTag(tag: string,game:string) {
-  const [data, setData] = useState<PlayerData | null>(null)
-  const [isLoading, setIsLoading] = useState(true)
+export function usePlayerByTag(tag: string, game: string) {
+  const [data, setData] = useState<ClashRoyalePlayerType | null>(null)
+  const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
 
-  useEffect(() => {
-    if (!tag) return
+  // Get functions from store
+  const addPlayer = useBookmarkStore((s) => s.addPlayer)
+  const remove = useBookmarkStore((s) => s.removePlayer)
+  const getPlayer = useBookmarkStore((s) => s.getPlayer)
 
+  // We get bookmarked player from store — but only to initialize or sync
+  const bookmarkedPlayer = getPlayer(tag, game)
+
+  useEffect(() => {
+    if (!tag || !game) {
+      setData(null)
+      setIsLoading(false)
+      return
+    }
+
+    // If we already have bookmarked data, start with it
+    if (bookmarkedPlayer) {
+      setData(bookmarkedPlayer)
+      setIsLoading(false)
+      setError(null)
+      return
+    }
+
+    // Otherwise, fetch from API
     setIsLoading(true)
     setError(null)
 
     axios
-      .get(`/api/${game}/player/${tag}`)
+      .get<ClashRoyalePlayerType>(`/api/${game}/player/${tag}`)
       .then((res) => {
         setData(res.data)
+        // Optionally, add to bookmarks if you want on load
+        // addPlayer(tag, game, res.data)
       })
       .catch((err) => {
         setError(err)
+        setData(null)
       })
       .finally(() => {
         setIsLoading(false)
       })
-  }, [tag])
+  }, [tag, game, bookmarkedPlayer])
 
-  return { data, isLoading, error }
+  // Wrap addPlayer and remove to also update local data if needed
+  const add = useCallback(() => {
+    if (data) addPlayer(tag, game, data)
+  }, [addPlayer, data, tag, game])
+
+  const removeAndClear = useCallback(() => {
+    remove(tag, game)
+    // Optionally clear local data or keep it visible after removal
+    // setData(null)
+  }, [remove, tag, game])
+
+  return {
+    data,
+    isLoading,
+    error,
+    addPlayer: add,
+    removePlayer: removeAndClear,
+  }
 }

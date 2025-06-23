@@ -1,21 +1,23 @@
 'use client';
 
-import { GameType } from '@/types/data-types';
+import { useGameBadgeStore } from '@/store/useGameBadgeStore';
+import { GameType } from '@/types/data.types';
 import { useRouter } from 'next/navigation';
 import { useState, FormEvent } from 'react';
 
-export default function SearchBar({game}:{game:GameType}) {
+export default function SearchBar() {
+  const{game}=useGameBadgeStore()
   const [input, setInput] = useState('');
   const router = useRouter();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const trimmed = input.trim();
+    const trimmed = input.trim().toUpperCase();
     if (trimmed) {
       router.push(`/${game}/Player/${encodeURIComponent(trimmed)}`);
     }
   };
-console.log("Logged Game==========>",game);
+// console.log("Logged Game==========>",game);
 
   return (
     <form onSubmit={handleSubmit} className="flex items-center gap-2">

@@ -1,22 +1,16 @@
-"use client";
-import { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { ClashIcon } from "@/components/Icons/ClashIcon";
-import { RoyaleIcon } from "@/components/Icons/RoyaleIcon";
-import SearchBar from "@/components/SearchBar";
-import clsx from "clsx";
-import { GameType } from "@/types/data.types";
+"use client"
+import { GameType } from '@/types/data.types'
+import clsx from 'clsx'
+import {  AnimatePresence, motion } from 'framer-motion'
+import React from 'react'
+import { ClashIcon } from './Icons/ClashIcon'
+import { RoyaleIcon } from './Icons/RoyaleIcon'
+import { useGameBadgeStore } from '@/store/useGameBadgeStore'
 
-const CocPlayerPage = () => {
-  const [game, setGame] = useState<GameType>(GameType.coc);
-
-  const toggleGame = () => {
-    setGame((prev) => (prev === GameType.coc ? GameType.clashroyale : GameType.coc));
-  };
-
+const GameSelectBadge = () => {
+    const{game,setGame,toggleGame}=useGameBadgeStore()
   return (
-    <div className="w-full min-h-screen bg-slate-100 flex flex-col items-center justify-center">
-      <div
+     <div
         className={clsx(`w-14 h-14 bg-gradient-to-br  rounded-xl cursor-pointer shadow-md 
         border-green-700 flex items-center justify-center overflow-hidden`,
           game===GameType.coc?' from-green-500 to-green-400':'from-sky-500 to-sky-400'
@@ -24,6 +18,7 @@ const CocPlayerPage = () => {
         }
         onClick={toggleGame}
       >
+        
         <AnimatePresence mode="wait">
           {game === GameType.coc ? (
             <motion.div
@@ -49,11 +44,7 @@ const CocPlayerPage = () => {
             </motion.div>
           )}
         </AnimatePresence>
-      </div>
+      </div>  )
+}
 
-      <SearchBar game={game} />
-    </div>
-  );
-};
-
-export default CocPlayerPage;
+export default GameSelectBadge

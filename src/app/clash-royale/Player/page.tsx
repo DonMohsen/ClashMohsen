@@ -5,7 +5,7 @@ import { ClashIcon } from "@/components/Icons/ClashIcon";
 import { RoyaleIcon } from "@/components/Icons/RoyaleIcon";
 import SearchBar from "@/components/SearchBar";
 import clsx from "clsx";
-import { GameType } from "@/types/data-types";
+import { GameType } from "@/types/data.types";
 
 const ClashRoyalePlayerPage = () => {
   const [game, setGame] = useState<GameType>(GameType.coc);
