@@ -1,16 +1,18 @@
 import { useBookmarkStore } from '@/store/useBookmarkStore'
 import Link from 'next/link'
 import React from 'react'
+import ExpBadge from './ExpBadge'
 
 const BookmarkedList = () => {
       const players = useBookmarkStore((s) => s.players)
     
   return (
-    <div>
+    <div className='font-ClashBold'>
         {players.map((player)=>(
-            <Link href={`/${player.game}/Player/${player.tag}`} className='flex items-center justify-center w-full'>
+            <Link key={player.tag} href={`/${player.game}/Player/${player.tag}`} className='flex items-center justify-center w-full'>
+                <ExpBadge expLevel={player.data.expLevel}/>
                 {player.data.name}
-                {player.tag}
+                {/* {player.data.expLevel} */}
             </Link>
         ))}
     </div>

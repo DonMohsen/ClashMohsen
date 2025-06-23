@@ -4,6 +4,9 @@ import { useGameBadgeStore } from '@/store/useGameBadgeStore';
 import { GameType } from '@/types/data.types';
 import { useRouter } from 'next/navigation';
 import { useState, FormEvent } from 'react';
+import { Input } from './ui/input';
+import { Button } from './ui/button';
+import { Search } from 'lucide-react';
 
 export default function SearchBar() {
   const{game}=useGameBadgeStore()
@@ -20,20 +23,27 @@ export default function SearchBar() {
 // console.log("Logged Game==========>",game);
 
   return (
-    <form onSubmit={handleSubmit} className="flex items-center gap-2">
-      <input
-        type="text"
-        placeholder="Enter tag"
-        value={input}
-        onChange={(e) => setInput(e.target.value)}
-        className="border rounded px-3 py-2 text-black"
-      />
-      <button
-        type="submit"
-        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-      >
-        Search
-      </button>
-    </form>
+
+      <div className='   w-full flex items-center justify-center flex-col font-ClashBold select-none '>
+          <form  
+          className='mt-5 flex items-center justify-center relative w-[40%]'
+    onSubmit={handleSubmit} >
+
+          <Input
+          type='text'
+          value={input}
+          onChange={(e) => setInput(e.target.value.toUpperCase())}
+          placeholder='PRUU9GC'
+          className='w-full border-2 border-blue-400 pl-10 rounded-xl placeholder:text-black placeholder:opacity-40 cursor-auto text-black'/>
+            <Button
+            className='text-white font-light text-xs absolute right-0 bg-blue-400 hover:bg-blue-200 rounded-xl border-none w-[20%] '
+            ><Search /></Button>
+            <span className='text-xl absolute left-4 text-black'>#</span>
+          </form>
+            {/* <Button className='w-[40%] mt-5 bg-purple-600 hover:bg-purple-400 rounded-xl'>
+            Login/Signup
+            </Button> */}
+        </div>
+    
   );
 }
