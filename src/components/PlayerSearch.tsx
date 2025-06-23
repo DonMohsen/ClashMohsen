@@ -3,8 +3,9 @@
 import React from 'react'
 import { usePlayerByTag } from '@/hooks/usePlayerByTag'
 import { notFound } from 'next/navigation'
+import { GameType } from '@/types/data.types'
 
-const PlayerSearch = ({ tag,game }: { tag: string,game:string }) => {
+const PlayerSearch = ({ tag,game }: { tag: string,game:GameType }) => {
   const { data, isLoading, error } = usePlayerByTag(tag,game)
     if (!data) return notFound();
 

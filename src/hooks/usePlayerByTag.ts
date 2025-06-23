@@ -2,10 +2,10 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
-import { ClashRoyalePlayerType } from '@/types/data.types'
+import { ClashRoyalePlayerType, GameType } from '@/types/data.types'
 import { useBookmarkStore } from '@/store/useBookmarkStore'
 
-export function usePlayerByTag(tag: string, game: string) {
+export function usePlayerByTag(tag: string, game: GameType) {
   const [data, setData] = useState<ClashRoyalePlayerType | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)

@@ -3,13 +3,13 @@
 
 import React from 'react'
 import { usePlayerByTag } from '@/hooks/usePlayerByTag'
-import Image from 'next/image'
 import { useBookmarkStore } from '@/store/useBookmarkStore'
 import ExpBadge from './ExpBadge'
+import { GameType } from '@/types/data.types'
 
 type PlayerStatsProps = {
   tag: string
-  game:string
+  game:GameType
 }
 
 const PlayerStats: React.FC<PlayerStatsProps> = ({ tag ,game}) => {
