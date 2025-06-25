@@ -24,7 +24,7 @@ const GameSelectArea = () => {
       />
        <Image
         alt="king"
-        src="/barbarianKing.png"
+        src="/barbarianking.png"
         width={200}
         height={200}    
 className={clsx(`transition-all duration-100 `,
