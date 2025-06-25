@@ -2,15 +2,21 @@
 
 import { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
-import { ClashRoyalePlayerType, GameType } from '@/types/data.types'
+import {
+  ClashRoyalePlayerType,
+  CocPlayerType,
+  GameType,
+  PlayerData
+} from '@/types/data.types'
 import { useBookmarkStore } from '@/store/useBookmarkStore'
 
+// Define a union of both player types
+
 export function usePlayerByTag(tag: string, game: GameType) {
-  const [data, setData] = useState<ClashRoyalePlayerType | null>(null)
+  const [data, setData] = useState<PlayerData | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
 
-  // Grab store actions
   const addToStore = useBookmarkStore((s) => s.addPlayer)
   const removeFromStore = useBookmarkStore((s) => s.removePlayer)
   const getPlayer = useBookmarkStore((s) => s.getPlayer)
@@ -29,7 +35,7 @@ export function usePlayerByTag(tag: string, game: GameType) {
     setError(null)
 
     axios
-      .get<ClashRoyalePlayerType>(`/api/${game}/player/${tag}`)
+      .get<PlayerData>(`/api/${game}/player/${tag}`)
       .then((res) => {
         setData(res.data)
       })
@@ -46,7 +52,6 @@ export function usePlayerByTag(tag: string, game: GameType) {
 
   const removePlayer = useCallback(() => {
     removeFromStore(tag, game)
-    // don't clear local `data` – keep showing even after removal
   }, [tag, game, removeFromStore])
 
   return {
@@ -55,5 +60,9 @@ export function usePlayerByTag(tag: string, game: GameType) {
     error,
     addPlayer,
     removePlayer,
+    // Bonus: narrowed type guards
+    isClashRoyalePlayer: game === GameType.clashroyale,
+    isCocPlayer: game === GameType.coc,
+    isBrawlStarsPlayer:game ===GameType.brawlstars
   }
 }

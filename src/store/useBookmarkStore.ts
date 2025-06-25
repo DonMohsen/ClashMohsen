@@ -1,50 +1,72 @@
 import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
-import { ClashRoyalePlayerType, GameType } from '@/types/data.types'
-
+import {
+  ClashRoyalePlayerType,
+  GameType,
+  CocPlayerType,
+  PlayerData,
+} from '@/types/data.types'
 
 export interface StoredPlayer {
   tag: string
   game: GameType
-  data: ClashRoyalePlayerType
+  data: PlayerData
 }
 
 interface PlayerStore {
   players: StoredPlayer[]
-  addPlayer: (tag: string, game: GameType, data: ClashRoyalePlayerType) => void
-  removePlayer: (tag: string, game: GameType) => void
-  getPlayer: (tag: string, game: GameType) => ClashRoyalePlayerType | undefined
+  isLoading: boolean
+  addPlayer: (tag: string, game: GameType, data: PlayerData) => Promise<void>
+  removePlayer: (tag: string, game: GameType) => Promise<void>
+  getPlayer: (tag: string, game: GameType) => PlayerData | undefined
+  setLoading: (loading: boolean) => void
 }
 
 export const useBookmarkStore = create<PlayerStore>()(
   persist(
     (set, get) => ({
       players: [],
-      addPlayer: (tag, game, data) => {
-        set((state) => {
-          const exists = state.players.some(
+      isLoading: false,
+      setLoading: (loading) => set({ isLoading: loading }),
+
+      addPlayer: async (tag, game, data) => {
+        set({ isLoading: true })
+        try {
+          const exists = get().players.some(
             (p) => p.tag === tag && p.game === game
           )
-          if (exists) return state
-          return {
-            players: [...state.players, { tag, game, data }],
+          if (!exists) {
+            set((state) => ({
+              players: [...state.players, { tag, game, data }],
+            }))
           }
-        })
+        } finally {
+          set({ isLoading: false })
+        }
       },
-      removePlayer: (tag, game) => {
-        set((state) => ({
-          players: state.players.filter(
-            (p) => !(p.tag === tag && p.game === game)
-          ),
-        }))
+
+      removePlayer: async (tag, game) => {
+        set({ isLoading: true })
+        try {
+          set((state) => ({
+            players: state.players.filter(
+              (p) => !(p.tag === tag && p.game === game)
+            ),
+          }))
+        } finally {
+          set({ isLoading: false })
+        }
       },
+
       getPlayer: (tag, game) => {
-        return get().players.find((p) => p.tag === tag && p.game === game)?.data
+        return get().players.find(
+          (p) => p.tag === tag && p.game === game
+        )?.data
       },
     }),
     {
       name: 'bookmark-storage',
-      storage: createJSONStorage(() => localStorage), // Wrap localStorage here
+      storage: createJSONStorage(() => localStorage),
     }
   )
 )

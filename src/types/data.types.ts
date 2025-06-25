@@ -1,6 +1,7 @@
 export enum GameType {
   coc = "coc",
-  clashroyale = "clash-royale"
+  clashroyale = "clash-royale",
+  brawlstars="brawl-stars"
 }
 //!COC Res................................................................................................................................
 // types/coc.types.ts
@@ -225,3 +226,52 @@ export interface PathProgress {
   trophies: number;
   bestTrophies: number;
 }
+//!Brawl Stars Player Response Type......................................................................................................
+export interface BrawlStarsPlayerType {
+  tag: string
+  name: string
+  nameColor: string
+  icon: {
+    id: number
+  }
+  trophies: number
+  highestTrophies: number
+  expLevel: number
+  expPoints: number
+  isQualifiedFromChampionshipChallenge: boolean
+  "3vs3Victories": number
+  soloVictories: number
+  duoVictories: number
+  bestRoboRumbleTime: number
+  bestTimeAsBigBrawler: number
+  club?: Record<string, unknown> // Could be replaced with proper type if club details are known
+  brawlers: Brawler[]
+}
+
+export interface Brawler {
+  id: number
+  name: string
+  power: number
+  rank: number
+  trophies: number
+  highestTrophies: number
+  gears: Gear[]
+  starPowers: Ability[]
+  gadgets: Ability[]
+}
+
+export interface Gear {
+  id: number
+  name: string
+  level: number
+}
+
+export interface Ability {
+  id: number
+  name: string
+}
+
+
+
+
+export type PlayerData = ClashRoyalePlayerType | CocPlayerType | BrawlStarsPlayerType

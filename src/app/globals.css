@@ -5,20 +5,20 @@
 
 @font-face {
     font-family: "SupercellHeadline";
-    src: url('../public/fonts/supercellheadline-heavy.ttf') format('truetype');
+    src: url('../../public/fonts/supercellheadline-heavy.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
 
   @font-face {
     font-family: "SupercellTextMedium";
-    src: url('../public/fonts/Supercell-Magic-Regular.ttf') format('truetype');
+    src: url('../../public/fonts/Supercell-Magic-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
   }
 @font-face {
   font-family: 'ClashBold';
-  src: url('../public/fonts/Clash_Bold.otf') format('opentype');
+  src: url('../../public/fonts/Clash_Bold.otf') format('opentype');
   font-weight: 400; /* adjust if needed */
   font-style: normal;
   font-display: swap;
