@@ -44,7 +44,7 @@ export function usePlayerByTag(tag: string, game: GameType) {
         setData(null)
       })
       .finally(() => setIsLoading(false))
-  }, [tag, game])
+  }, [tag, game,getPlayer])
 
   const addPlayer = useCallback(() => {
     if (data) addToStore(tag, game, data)

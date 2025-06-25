@@ -1,6 +1,5 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import HeroPhoto from "@/public/hero-photo.webp"
 import Image from 'next/image'
 import { Button } from './ui/button'
 import { Input } from './ui/input'
@@ -50,7 +49,7 @@ const Hero = () => {
       </div>
       <div className='flex items-center justify-center w-full h-1/2 relative'>
       <Image
-          src={HeroPhoto}
+          src='/hero-photo.webp'
           alt="Hero Image"
           className="object-cover w-full h-full absolute"
         />

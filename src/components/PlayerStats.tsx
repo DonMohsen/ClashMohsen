@@ -29,7 +29,7 @@ const [brawlData, setBrawlData] = useState<BrawlStarsPlayerType | null>(null)
     }  else if (isBrawlStarsPlayer && data) {
     setBrawlData(data as BrawlStarsPlayerType)
   }
-  }, [data, isClashRoyalePlayer, isCocPlayer])
+  }, [data, isClashRoyalePlayer, isCocPlayer,isBrawlStarsPlayer])
 
   const addPlayer = useBookmarkStore((s) => s.addPlayer)
   const remove = useBookmarkStore((s) => s.removePlayer)
