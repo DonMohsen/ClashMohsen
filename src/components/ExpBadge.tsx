@@ -3,10 +3,7 @@ import React from 'react'
 
 const ExpBadge = ({expLevel}:{expLevel:number}) => {
   return (
-<div className="relative w-14 h-14 rounded-[10px] bg-gradient-to-br from-sky-400 to-sky-700 shadow-md flex items-center justify-center
-  border border-transparent
-  before:absolute before:inset-0 before:rounded-[10px]
-  before:border before:border-white/30 before:backdrop-blur-sm before:pointer-events-none before:z-10"
+<div className='relative'
 >
   <Image
     alt="xp"

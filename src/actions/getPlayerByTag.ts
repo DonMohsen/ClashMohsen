@@ -1,27 +1,35 @@
-export async function getPlayerByTag(tag: string) {
-  const apiToken = process.env.CLASH_ROYALE_API_KEY;
+import { cache } from 'react';
 
+export const getPlayerByTag = cache(async (tag: string) => {
+  
+  const apiToken = process.env.COC_API_KEY;
+  
   if (!apiToken) {
     throw new Error('API token not found');
   }
-
+  
   try {
-    // const encodedTag = encodeURIComponent(`#${tag}`);
-    const response = await fetch(`https://proxy.royaleapi.dev/v1/players/%23${tag}`, {
+    const response = await fetch(`https://cocproxy.royaleapi.dev/v1/players/%23${tag}`, {
       headers: {
         Authorization: `Bearer ${apiToken}`,
       },
-      cache: 'no-store', // no caching (SSR)
+      next: {
+        revalidate: 300, // ISR
+      },
     });
+    
+    const status = response.status;
+    console.log(`statussssssssss`,status);
 
     if (!response.ok) {
-      const error = await response.text();
-      throw new Error(`API error: ${error}`);
+      // You might still want to parse the body for error message here if needed
+      return { data: null, status };
     }
 
-    return await response.json();
+    const data = await response.json();
+    return { data, status };
   } catch (error) {
     console.error("getPlayerByTag error:", error);
     throw new Error('Failed to fetch player data');
   }
-}
+});

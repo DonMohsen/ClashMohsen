@@ -73,7 +73,7 @@ export default function SearchBar() {
             setInput(e.target.value.toUpperCase());
             setShowSuggestions(true);
           }}
-          placeholder={`Enter ${game===GameType.clashroyale?'Clash Royale':game===GameType.coc?'Clash of Clans':'Brawl Stars'} Tag`}
+          placeholder={`${game===GameType.clashroyale?'Clash Royale':game===GameType.coc?'Clash of Clans':'Brawl Stars'} Tag`}
           className="w-full border-2 border-blue-400 pl-10 rounded-xl placeholder:text-black placeholder:opacity-40 cursor-auto text-black"
         />
         <Button className="text-white font-light text-xs absolute right-0 bg-blue-400 hover:bg-blue-200 rounded-xl border-none w-[20%] ">

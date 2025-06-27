@@ -23,6 +23,8 @@ const ImageKit = ({ path, src, alt, className }: ImageType) => {
         path={path}
         src={src}
         alt={alt}
+        // width={100}
+        // height={100}
         lqip={{ active: true, quality: 20 }}
         layout="fill"
         objectFit="contain"
