@@ -53,12 +53,15 @@ const CocPlayerStats: React.FC<Props> = ({ player, playerTag }) => {
     troops,
     spells,
     role,
+    donations,
+    donationsReceived,
+
   } = player;
 
   return (
-    <div className="max-w-3xl overflow-x-hidden mx-auto bg-white shadow-xl h-full w-full rounded-b-2xl space-y-6">
+    <div className="max-w-3xl overflow-x-hidden mx-auto bg-white shadow-xl h-full w-full rounded-b-2xl space-y-6 p-3">
       {/* Header */}
-      <div className="flex flex-col relative items-center text-center pt-1 bg-[#839bde] h-full w-full ">
+      <div className="flex flex-col relative items-center text-center pt-1 bg-[#839bde] h-full w-full rounded-[10px] ">
         <div className="absolute top-0 right-0 ">
           <BookmarkToggle isBookmarked={isBookmarked} onToggle={handleToggle} />
         </div>
@@ -107,7 +110,7 @@ const CocPlayerStats: React.FC<Props> = ({ player, playerTag }) => {
           </div>
           {/* //! The Right side of header */}
 
-          <div className="w-full px-2 flex items-center flex-col  h-full justify-start font-ClashBold border-l">
+          <div className="w-full px-2 flex items-center flex-col  h-full justify-start font-ClashBold border-l pb-5 mb-5">
             <div className="flex  w-full items-center justify-center">
               {league?.iconUrls.medium && (
                 <Image
@@ -170,6 +173,12 @@ const CocPlayerStats: React.FC<Props> = ({ player, playerTag }) => {
               </div>
             </div>
           </div>
+        </div>
+        <div className=" border-t-2 pb-1 pt-[1px] border-[#7589c6] w-full flex items-center justify-center font-ClashRegular text-[10px] max-md:text-[6px] px-2 text-white">
+          <div className="flex items-center justify-center w-full"><p className="w-full">Troops donated:</p><div className="bg-[#566591] px-4 max-md:px-1 py-[1px] rounded-[4px]">{donations}</div></div>
+          <div className="flex items-center justify-center w-full"><p className="w-full">Troops recieved:</p><div className="bg-[#566591] px-4 max-md:px-1 py-[1px] rounded-[4px]">{donationsReceived}</div></div>
+          <div className="flex items-center justify-center w-full"><p className="w-full">Attacks Won:</p><div className="bg-[#566591] px-4 max-md:px-1 py-[1px] rounded-[4px]">{attackWins}</div></div>
+          <div className="flex items-center justify-center w-full"><p className="w-full">Defence Won:</p><div className="bg-[#566591] px-4 max-md:px-1 py-[1px] rounded-[4px]">{defenseWins}</div></div>
         </div>
       </div>
 

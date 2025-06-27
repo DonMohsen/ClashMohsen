@@ -1,35 +1,38 @@
-import { cache } from 'react';
+import { CocPlayerType } from "@/types/data.types";
+import { cache } from "react";
 
-export const getPlayerByTag = cache(async (tag: string) => {
-  
+interface GetPlayerByTagResponse {
+  data: CocPlayerType | null;
+  status: number;
+}
+
+export const getPlayerByTag = cache(async (tag: string): Promise<GetPlayerByTagResponse> => {
   const apiToken = process.env.COC_API_KEY;
-  
+
   if (!apiToken) {
-    throw new Error('API token not found');
+    throw new Error("API token not found");
   }
-  
+
   try {
     const response = await fetch(`https://cocproxy.royaleapi.dev/v1/players/%23${tag}`, {
       headers: {
         Authorization: `Bearer ${apiToken}`,
       },
       next: {
-        revalidate: 300, // ISR
+        revalidate: 300,
       },
     });
-    
+
     const status = response.status;
-    console.log(`statussssssssss`,status);
 
     if (!response.ok) {
-      // You might still want to parse the body for error message here if needed
       return { data: null, status };
     }
 
-    const data = await response.json();
+    const data: CocPlayerType = await response.json();
     return { data, status };
   } catch (error) {
     console.error("getPlayerByTag error:", error);
-    throw new Error('Failed to fetch player data');
+    throw new Error("Failed to fetch player data");
   }
 });
