@@ -14,9 +14,7 @@ const TrophyIcon: React.FC<IconProps> = (props) => (
     focusable="false"
     {...props}
   >
-    <g id="background">
-      <rect y="0" fill="#FFFFFF" width="600" height="600" />
-    </g>
+   
     <g id="objects">
       <g>
         <ellipse fill="#D8DFEA" cx="300.616" cy="554.031" rx="175.988" ry="4.969" />

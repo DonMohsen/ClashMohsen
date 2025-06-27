@@ -23,6 +23,13 @@
   font-style: normal;
   font-display: swap;
 }
+@font-face {
+  font-family: 'ClashRegular';
+  src: url('../../public/fonts/Clash_Regular.otf') format('opentype');
+  font-weight: 400; /* adjust if needed */
+  font-style: normal;
+  font-display: swap;
+}
   .cloudImage {
   
    background-image: radial-gradient(transparent,black 75%);

@@ -19,6 +19,8 @@ const config: Config = {
 			SupercellHeadline: 'SupercellHeadline',
 			SupercellTextMedium:'SupercellTextMedium',
 		 ClashBold: ['ClashBold', 'sans-serif'],
+		 		 ClashRegular: ['ClashRegular', 'sans-serif'],
+
 
 		  },
   		backgroundImage: {
