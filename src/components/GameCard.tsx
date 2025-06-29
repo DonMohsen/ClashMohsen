@@ -1,21 +1,33 @@
 import { GameType } from "@/types/data.types";
 import clsx from "clsx";
-import React from "react";
+import React, { useCallback } from "react";
 import ImageKit from "./ImageKit";
 import { useGameBadgeStore } from "@/store/useGameBadgeStore";
-import { motion } from "framer-motion";
+import { motion, useAnimation } from "framer-motion";
 
 const GameCard = ({ game }: { game: GameType }) => {
     const { game:selectedGame, setGame } = useGameBadgeStore();
    const handleSetGame = (clickedGame: GameType) => {
       selectedGame !== clickedGame && setGame(clickedGame);
     };
+      const controls = useAnimation();
+
+  const handleClick = useCallback(() => {
+    controls
+      .start({ scale: 0.9, transition: { duration: 0.1 } })
+      .then(() =>
+        controls.start({ scale: 1, transition: { type: "spring", stiffness: 400, damping: 20 } })
+      );
+
+    // Your actual game selection logic can go here
+    // handleSetGame(game)
+  }, [controls]);
   return (
-    <motion.div
-      whileTap={{ scale: 0.9 }}
-  transition={{ type: "tween", duration: 0.0 }}
+     <motion.div
+      animate={controls}
+      onClick={handleClick}
       className={clsx(
-        `rounded-[10px]  transition-all duration-300 flex relative h-[300px] w-[200px] max-sm:w-screen bg-black`,
+        `rounded-[10px] flex relative h-[300px] w-[200px] max-sm:w-screen bg-black cursor-pointer`,
         game === GameType.coc
           ? "border-green-500"
           : game === GameType.brawlstars
@@ -24,8 +36,7 @@ const GameCard = ({ game }: { game: GameType }) => {
           ? "border-sky-500"
           : "bg-black"
       )}
-      
-      >
+    >
 
 // inside your component
 {selectedGame === game && (
