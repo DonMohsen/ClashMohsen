@@ -39,7 +39,7 @@ const GameCard = ({ game }: { game: GameType }) => {
       )}
     >
 
-// inside your component
+{/* // inside your component */}
 {selectedGame === game && (
   <motion.div
     className="w-[200px] h-[150px] absolute -top-24 max-sm:w-screen  -translate-x-1/2 z-40"
