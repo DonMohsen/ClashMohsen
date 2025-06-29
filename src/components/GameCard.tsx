@@ -23,8 +23,9 @@ const GameCard = ({ game }: { game: GameType }) => {
     // handleSetGame(game)
   }, [controls]);
   return (
-     <motion.div
+   <motion.div
       animate={controls}
+      whileTap={{ scale: 0.95 }} // Instant feedback when holding
       onClick={handleClick}
       className={clsx(
         `rounded-[10px] flex relative h-[300px] w-[200px] max-sm:w-screen bg-black cursor-pointer`,
