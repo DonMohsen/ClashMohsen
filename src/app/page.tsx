@@ -21,6 +21,7 @@ const HomePage = () => {
       <SearchBar />
       {/* <GameSelectArea/> */}
       <BookmarkedList/>
+      
     </div>
   );
 };
