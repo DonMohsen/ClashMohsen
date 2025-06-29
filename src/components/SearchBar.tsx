@@ -9,6 +9,7 @@ import { Button } from "./ui/button";
 import { Search } from "lucide-react";
 import { motion } from "framer-motion";
 import GameSelectBadge from "./GameSelectBadge";
+import { formatCustomTag } from "@/lib/format-custom-tag";
 
 const SEARCH_KEY = "recentSearches"; // key for localStorage
 
@@ -43,14 +44,14 @@ export default function SearchBar() {
     const trimmed = input.trim().toUpperCase();
     if (trimmed) {
       saveSearch(trimmed);
-      router.push(`/${game}/Player/${encodeURIComponent(trimmed)}`);
+      router.push(`/${game}/Player/${formatCustomTag(input)}`);
     }
   };
 
   const handleSuggestionClick = (tag: string) => {
     setInput(tag);
     saveSearch(tag);
-    router.push(`/${game}/Player/${encodeURIComponent(tag)}`);
+    router.push(`/${game}/Player/${formatCustomTag(tag)}`);
     setShowSuggestions(false);
   };
 

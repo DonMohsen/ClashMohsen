@@ -17,7 +17,7 @@ if (!urlEndpoint) {
 
 const ImageKit = ({ path, src, alt, className }: ImageType) => {
   return (
-    <div className={className + " relative"}>
+    <div className={className}>
       <IKImage
         urlEndpoint={urlEndpoint}
         path={path}
