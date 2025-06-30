@@ -34,24 +34,22 @@ const GameCard = ({ game }: { game: GameType }) => {
     // Your actual game selection logic can go here
     // handleSetGame(game)
   }, [controls,selectedGame]);
-  const [searchMode, setSearchMode] = useState<"player" | "clan">("player");
- const sampleTag: Record<
-  GameType,
-  { player: string; clan: string }
-> = {
+  const [searchMode, setSearchMode] = useState<"player" | "clan"|"club"|"cr-clan">("player");
+const sampleTag: Record<GameType, Record<string, string>> = {
   [GameType.coc]: {
     player: "#89YLV9U9Q",
-    clan: "#LUCL908C",
+    clan: "#20888UYG",
+  },
+  [GameType.brawlstars]: {
+    player: "#LYOQ2LP",
+    club: "#2UJ0G8UQ8",
   },
   [GameType.clashroyale]: {
     player: "#PRUU9GC",
-    clan: "#CRCLN42",
-  },
-  [GameType.brawlstars]: {
-    player: "#PQ9J2C88",
-    clan: "#BSCLB123",
+    "cr-clan": "#JUJGUG0",
   },
 };
+
   return (
     <motion.div
       animate={controls}
@@ -59,8 +57,8 @@ const GameCard = ({ game }: { game: GameType }) => {
     whileTap: { scale: 0.95 },
   })}      onClick={handleClick}
       className={clsx(
-        `rounded-[10px] flex flex-col relative h-[300px] w-[200px] max-sm:w-screen `,
-        selectedGame !== game && "border-black cursor-pointer",
+        `rounded-[10px] flex flex-col max-sm:flex-row relative h-[300px] w-[200px] max-sm:w-[90%] max-sm:h-[100px] select-none  `,
+        selectedGame !== game ? "border-black cursor-pointer":
         selectedGame === GameType.coc
           ? "border-green-500"
           : selectedGame === GameType.brawlstars
@@ -71,7 +69,7 @@ const GameCard = ({ game }: { game: GameType }) => {
         game === selectedGame ? "border-[5px]" : "border-2"
       )}
     >
-      <div className="z-50">
+      <div className="z-50 max-sm:h-full max-sm:w-full   max-sm:flex max-sm:items-center max-sm:justify-center">
         {game === GameType.coc ? (
           <ClashIcon
             className={clsx(
@@ -97,7 +95,7 @@ const GameCard = ({ game }: { game: GameType }) => {
           <ClashIcon className=" h-10 text-black z-50 text-center w-full" />
         )}
       </div>
-      <h1 className="text-black z-50 font-ClashBold text-center w-full">
+      <h1 className="text-black z-50 font-ClashBold text-center w-full max-sm:hidden">
         {game === GameType.coc
           ? "Clash of Clans"
           : game === GameType.clashroyale
@@ -107,11 +105,11 @@ const GameCard = ({ game }: { game: GameType }) => {
           : ""}
       </h1>
    {selectedGame !== game ? (
-  <p className="z-50 font-ClashBold w-full h-full flex items-center justify-center">
+  <p className="z-50 font-ClashBold w-full h-full flex items-center justify-center sm:-rotate-45 text-[24px] max-sm:text-[12px]">
     Tap to select!
   </p>
 ) : (
-  <div className="z-50 w-full flex flex-col items-center gap-4 justify-center h-full transition-all duration-500">
+  <div className="z-50 w-full flex flex-col items-center gap-4 max-sm:gap-1 justify-center h-[50%] max-sm:h-full  max-sm:left-0 min-h-[50%] transition-all duration-500">
     <RadioGroup
       value={searchMode}
       onValueChange={(value: "player" | "clan") => setSearchMode(value as "player" | "clan")}
@@ -122,33 +120,55 @@ const GameCard = ({ game }: { game: GameType }) => {
         <UserRound className="w-6 h-6" />
         <Label htmlFor="player">Player</Label>
       </div>
+      {game===GameType.coc&&
       <div className="flex items-center space-x-2 justify-center">
         <RadioGroupItem value="clan" id="clan" />
-        <Image alt="clan" src="/clan.png" width={200} height={200} className="w-6 h-6"/>
+        <Image priority alt="clan" src="/clan.png" width={200} height={200} className="w-6 h-6"/>
         <Label htmlFor="clan">Clan</Label>
       </div>
+      }
+      {game===GameType.brawlstars&&
+        <div className="flex items-center space-x-2 justify-center">
+        <RadioGroupItem value="club" id="club" />
+        <Image priority alt="club" src="/club.png" width={200} height={200} className="w-6 h-6"/>
+        <Label htmlFor="club">Club</Label>
+      </div>
+        }
+          {game===GameType.clashroyale&&
+        <div className="flex items-center space-x-2 justify-center">
+        <RadioGroupItem value="cr-clan" id="cr-clan" />
+        <Image priority alt="clash-royale-clan" src="/clash-royale-clan.png" width={200} height={200} className="w-6 h-6"/>
+        <Label htmlFor="cr-clan">Clan</Label>
+      </div>
+        }
     </RadioGroup>
   </div>
 )}
 {selectedGame===game&&
-<p className="z-50 text-center font-ClashBold w-full items-end justify-center pb-10">
-  Now enter a {searchMode} Tag like{" "}
+<div className="z-50 text-center font-ClashBold w-full sm:items-end justify-center sm:pb-10 text-[14px] max-sm:text-[10px] max-sm:flex max-sm:items-center max-sm:justify-center max-sm:h-full">
+  <div className=" w-full h-full max-sm:flex max-sm:items-center max-sm:justify-center ">
+    <p>
+
+
+  Now enter a {searchMode==='cr-clan'?'clan':searchMode} Tag like{" "}
   <span
     onClick={() => {
       navigator.clipboard.writeText(sampleTag[selectedGame][searchMode]);
     }}
     className={clsx(`cursor-pointer hover:text-green-500 transition-colors`,)}
-  >
+    >
     {sampleTag[selectedGame][searchMode]}
   </span>
-</p>
+      </p>
+    </div>
+</div>
 
 
 }
       {/* // inside your component */}
       {selectedGame === game && (
         <motion.div
-          className="w-[200px] h-[150px] absolute -top-24 max-sm:w-screen  -translate-x-1/2 z-30"
+          className="w-[200px] h-[150px] absolute -top-24 max-sm:w-screen  -translate-x-1/2 z-30 max-sm:hidden"
           initial={{ y: 50, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{

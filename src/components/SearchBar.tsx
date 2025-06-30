@@ -10,6 +10,7 @@ import { Search } from "lucide-react";
 import { motion } from "framer-motion";
 import GameSelectBadge from "./GameSelectBadge";
 import { formatCustomTag } from "@/lib/format-custom-tag";
+import clsx from "clsx";
 
 const SEARCH_KEY = "recentSearches"; // key for localStorage
 
@@ -60,7 +61,7 @@ export default function SearchBar() {
   );
 
   return (
-    <div className="w-full flex items-center justify-center flex-col font-ClashBold select-none max-md:px-[10%] md:px-[40%]">
+    <div className="w-full flex items-center justify-center flex-col font-ClashBold select-none max-sm:px-[5%] md:px-[40%]">
       <form
         className="mt-5 flex items-center justify-center relative w-full"
         onSubmit={handleSubmit}
@@ -75,9 +76,20 @@ export default function SearchBar() {
             setShowSuggestions(true);
           }}
           placeholder={`${game===GameType.clashroyale?'Clash Royale':game===GameType.coc?'Clash of Clans':'Brawl Stars'} Tag`}
-          className="w-full border-2 border-blue-400 pl-10 rounded-xl placeholder:text-black placeholder:opacity-40 cursor-auto text-black"
+          className={clsx(`w-full border-2 pl-10 rounded-xl placeholder:text-black placeholder:opacity-40 cursor-auto text-black`,
+            game===GameType.coc?'border-green-400':
+                        game===GameType.clashroyale?'border-sky-400':
+            game===GameType.brawlstars?'border-yellow-400':
+            'border-black'
+
+          )}
         />
-        <Button className="text-white font-light text-xs absolute right-0 bg-blue-400 hover:bg-blue-200 rounded-xl border-none w-[30%] ">
+        <Button className={clsx(`text-white font-light text-xs absolute right-0  rounded-xl border-none w-[30%]`,
+          game===GameType.coc?'bg-green-400 hover:bg-green-200':
+                    game===GameType.clashroyale?'bg-sky-400 hover:bg-sky-200':
+          game===GameType.brawlstars?'bg-yellow-400 hover:bg-yellow-200':
+            'bg-black'
+        )}>
           <Search />
         </Button>
         {/* <GameSelectBadge/> */}
