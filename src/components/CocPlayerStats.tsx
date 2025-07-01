@@ -83,7 +83,7 @@ const CocPlayerStats: React.FC<Props> = ({ player, playerTag }) => {
               </div>
             </div>
             <div className="flex items-center justify-start w-full gap-2 px-2 pt-1 font-ClashBold">
-              {clan && (
+              {clan ? (
                 <div className="flex items-center w-full gap-1 justify-start  ">
                   {clan.badgeUrls.small && (
                     <Image
@@ -104,20 +104,47 @@ const CocPlayerStats: React.FC<Props> = ({ player, playerTag }) => {
                     <p className="text-sm text-gray-500">{role}</p>
                   </div>
                 </div>
-              )}
+              )
+            :
+            (
+               <div className="flex items-center w-full gap-1 justify-start  ">
+                  
+                    <Image
+                      src='/no-clan.png'
+                      alt='no-clan'
+                      width={48}
+                      height={48}
+                      className="rounded w-20 h-20"
+                    />
+                  
+                  <div className="flex items-start justify-center flex-col">
+                    <p
+                      className="text-md font-extrabold text-white font-ClashBold"
+                      // style={{ WebkitTextStroke: "0.5px black" }}
+                    >
+                      No clan
+                    </p>
+                    <p className="text-sm text-gray-500">...</p>
+                  </div>
+                </div>
+            )
+            }
             </div>
           </div>
           {/* //! The Right side of header */}
 
           <div className="w-full px-2 flex items-center flex-col  h-full justify-start font-ClashBold md:border-l pb-5 mb-5">
-            <div className="flex  w-full items-center justify-center">
+              {league?
+              (
+
+                <div className="flex  w-full items-center justify-center">
               {league?.iconUrls.medium && (
                 <Image
-                  src={league.iconUrls.medium}
-                  alt={league.name}
-                  width={100}
-                  height={100}
-                  className="mt-2 w-[100px] h-[100px] max-md:w-[80px] max-md:h-[80px] z-50"
+                src={league.iconUrls.medium}
+                alt={league.name}
+                width={100}
+                height={100}
+                className="mt-2 w-[100px] h-[100px] max-md:w-[80px] max-md:h-[80px] z-50"
                 />
               )}
               <div className="flex flex-col items-start w-full h-full  justify-center gap-0">
@@ -134,6 +161,36 @@ const CocPlayerStats: React.FC<Props> = ({ player, playerTag }) => {
                 </div>
               </div>
             </div>
+            ):
+            (
+               <div className="flex  w-full items-center justify-center">
+              
+                <Image
+                src='/no_league.png'
+                alt='no-league'
+                width={100}
+                height={100}
+                className="mt-2 w-[100px] h-[100px] max-md:w-[90px] max-md:h-[90px] z-50"
+                />
+              
+              <div className="flex flex-col items-start w-full h-full  justify-center gap-0">
+                <div className="flex items-center justify-start -translate-x-12 from-slate-900 to-transparent bg-gradient-to-r w-[90%]">
+                  <p className="mt-1  text-white text-md max-md:text-sm  translate-x-12">
+                    Unranked
+                  </p>
+                </div>
+                <div className="flex items-center justify-start gap-0 w-[90%] -translate-x-10 bg-gradient-to-r from-purple-900 to-transparent">
+                  <TrophyIcon className="w-8 h-8 max-md:w-7 max-md:h-7 translate-x-10" />
+                  <p className="text-[20px] max-md:text-sm text-white translate-x-10">
+                    {trophies}
+                  </p>
+                </div>
+              </div>
+            </div>
+            )
+                    }
+
+
             <div className="flex flex-row w-full h-full pt-10 max-md:pt-4">
               <div className="flex flex-col w-full items-start justify-center text-white pl-5 font-ClashRegular gap-2 text-[10px] ">
                 <p>War Stars Won:</p>
@@ -150,11 +207,11 @@ const CocPlayerStats: React.FC<Props> = ({ player, playerTag }) => {
               </div>
               <div className="flex flex-col w-full items-start justify-center text-white pl-5 font-ClashRegular gap-2 text-[10px] ">
                 <p>All Time Best:</p>
-                {league?.iconUrls.small && (
+                
                   <div className="bg-[#39385a] rounded-[6px] w-[90%] flex h-[50%] items-center justify-center relative ">
                     <Image
                       alt="war-stars-won"
-                      src={league.iconUrls.small}
+                      src='/no_league.png'
                       width={200}
                       height={200}
                       className="w-10 h-10 -translate-x-4 absolute left-0"
@@ -164,7 +221,7 @@ const CocPlayerStats: React.FC<Props> = ({ player, playerTag }) => {
                       {bestTrophies}
                     </p>
                   </div>
-                )}
+                
               </div>
             </div>
           </div>
@@ -196,6 +253,10 @@ const CocPlayerStats: React.FC<Props> = ({ player, playerTag }) => {
           </div>
         </div>
       </div>
+      {
+        legendStatistics&&
+
+      
       <div className="flex flex-col relative items-center text-center pt-1 bg-gradient-to-t font-ClashBold from-[#584f86] to-[#a696f5] h-full w-full rounded-[10px] mt-2 pb-5 ">
         <p className="text-white">Legend League Tournament</p>
         <div className="flex max-md:flex-col items-center max-md:justify-center justify-between w-full mt-1 max-md:gap-5 max-md:px-5 ">
@@ -220,19 +281,20 @@ const CocPlayerStats: React.FC<Props> = ({ player, playerTag }) => {
                 Best: {legendStatistics?.bestSeason?.id}
               </p>
               <div className="flex flex-col w-full items-start justify-center text-white pl-3 font-ClashRegular gap-2 text-[10px] ">
-                {league?.iconUrls.small && (
+                
                   <div className="bg-[#39385a] rounded-[6px] w-[55%] flex h-[50%] items-center justify-end relative py-3 pr-2 ">
                     <TrophyIcon className="w-8 h-8 -translate-x-4 absolute left-0" />
-                    <p className="text-[16px]">{bestTrophies}</p>
+                    <p className="text-[16px]">{legendStatistics?.bestSeason?.trophies}</p>
                   </div>
-                )}
+                
               </div>
             </div>
           </div>
-
-          <div className="w-full flex">
+                {legendStatistics?.previousSeason?
+                (
+                  <div className="w-full flex">
             <div className="w-[100px]">
-              <div className="relative w-[75px] h-[75px] ">
+                     <div className="relative w-[75px] h-[75px] ">
                 <Image
                   alt="legend league"
                   src="/legend-league.png"
@@ -240,44 +302,88 @@ const CocPlayerStats: React.FC<Props> = ({ player, playerTag }) => {
                   height={200}
                   className="w-full h-full"
                 />
-                <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-lg font-bold">
-                  {legendStatistics?.previousSeason?.rank}
+              
+
+                  <p className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-lg font-bold">
+                  {legendStatistics.previousSeason.rank}
                 </p>
+             
+                  
+                
               </div>
+            
+           
             </div>
 
             <div className="flex items-center justify-center flex-col w-full">
               <p className="text-[10px] text-white w-full text-left">
-                Previous: {legendStatistics?.previousSeason?.id}
+                Previous: {legendStatistics.previousSeason.id}
               </p>
               <div className="flex flex-col w-full items-start justify-center text-white pl-3 font-ClashRegular gap-2 text-[10px] ">
-                {league?.iconUrls.small && (
+                
                   <div className="bg-[#39385a] rounded-[6px] w-[55%] flex h-[50%] items-center justify-end relative py-3 pr-2 ">
                     <TrophyIcon className="w-8 h-8 -translate-x-4 absolute left-0" />
-                    <p className="text-[16px]">{legendStatistics?.previousSeason?.trophies}</p>
+                    <p className="text-[16px]">{legendStatistics.previousSeason.trophies}</p>
                   </div>
-                )}
+                
               </div>
             </div>
           </div>
+                ):
+                (
+                  <div className="w-full flex">
+            <div className="w-[100px]">
+             
+              
+                   <div className="relative w-[75px] h-[75px] ">
+                <Image
+                  alt="legend league"
+                  src="/no_league.png"
+                  width={200}
+                  height={200}
+                  className="w-full h-full"
+                />
+               
+                  
+                
+                
+              </div>
+              
+              
+           
+            </div>
+
+            <div className="flex items-center justify-center flex-col w-full">
+             
+              <div className="flex flex-col w-full items-start justify-center text-white  font-ClashRegular  text-[10px] ">
+                    <p className="text-[12px]">Did not placed</p>
+                  
+                
+              </div>
+            </div>
+          </div>
+                )
+              }
+          
           <div className="w-full flex flex-col h-full ">
             <div className="flex items-center justify-center flex-col w-full gap-1 h-full">
               <p className="text-[10px] text-white w-full text-left -translate-y-2">
                 Legend Trophies 
               </p>
               <div className="flex flex-col w-full items-start justify-center text-white pl-3 font-ClashRegular gap-2 text-[10px] ">
-                {league?.iconUrls.small && (
+                
                   <div className="bg-[#39385a] rounded-[6px] w-[55%] flex  items-center justify-end relative  pr-2 ">
                     {/* <TrophyIcon className="w-8 h-8 -translate-x-4 absolute left-0" /> */}
                     <Image alt="legend-trophies" src="/legend-trophy.webp" width={200} height={200} className="w-10 h-10 -translate-x-4 absolute left-0"/>
                     <p className="text-[16px]">{legendStatistics?.legendTrophies}</p>
                   </div>
-                )}
+                
               </div>
             </div>
           </div>
         </div>
       </div>
+}
 
      
     </div>
