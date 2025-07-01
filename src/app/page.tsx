@@ -1,12 +1,7 @@
-"use client";
 import SearchBar from "@/components/SearchBar";
-import GameSelectBadge from "@/components/GameSelectBadge";
 import BookmarkedList from "@/components/BookmarkedList";
-import Hero from "@/components/Hero";
-import GameSelectArea from "@/components/GameSelectArea";
 import { GameType } from "@/types/data.types";
 import GameCard from "@/components/GameCard";
-import { motion } from "framer-motion";
 
 const HomePage = () => {
   return (

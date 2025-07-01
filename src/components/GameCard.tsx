@@ -1,3 +1,4 @@
+"use client"
 import { GameType } from "@/types/data.types";
 import clsx from "clsx";
 import React, { useCallback, useState } from "react";
@@ -11,6 +12,7 @@ import { RadioGroup, RadioGroupItem } from "./ui/radio-group";
 import { Label } from "./ui/label";
 import Image from "next/image";
 import { UserRound } from "lucide-react";
+import { toast } from "sonner"; // or "react-hot-toast"
 
 const GameCard = ({ game }: { game: GameType }) => {
   const { game: selectedGame, setGame } = useGameBadgeStore();
@@ -154,8 +156,15 @@ const sampleTag: Record<GameType, Record<string, string>> = {
   <span
     onClick={() => {
       navigator.clipboard.writeText(sampleTag[selectedGame][searchMode]);
+        toast.success(`${sampleTag[selectedGame][searchMode]} Copied to clipboard!`);
+
     }}
-    className={clsx(`cursor-pointer hover:text-green-500 transition-colors`,)}
+    className={clsx(`cursor-pointer transition-colors`,
+      game===GameType.coc?'text-green-500 hover:text-green-400':
+            game===GameType.clashroyale?'text-sky-500 hover:text-sky-400':
+      game===GameType.brawlstars?'text-yellow-500 hover:text-yellow-400':
+'text-green-500 hover:text-green-400'
+    )}
     >
     {sampleTag[selectedGame][searchMode]}
   </span>
