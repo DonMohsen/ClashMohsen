@@ -13,6 +13,10 @@ const BookmarkedList = () => {
 loadinggggggggggggggggggg
         </div>
         }
+        {!players.length&&
+        <p className='py-5 text-center max-sm:text-[12px] text-yellow-500'>use the golden bookmark option on top of the players profiles, to bookmark them!</p>
+        }
+        
         {players.map((player)=>(
             <Link key={player.tag} href={`/${player.game}/Player/${player.tag}`} className='flex items-center gap-2 justify-start w-full'>
                 <ExpBadge expLevel={player.data.expLevel}/>

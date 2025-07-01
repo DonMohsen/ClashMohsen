@@ -21,6 +21,7 @@ const HomePage = () => {
         </div>
       <SearchBar />
       {/* <GameSelectArea/> */}
+      <p className="my-5 font-ClashBold text-center max-sm:text-[14px]">{`for now, we only have the clash of clans UI partially ready!`}</p>
       <BookmarkedList/>
       
  
