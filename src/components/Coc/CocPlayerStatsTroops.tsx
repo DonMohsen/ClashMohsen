@@ -8,6 +8,7 @@ import { darkTroopNames } from "@/constants/coc/cocDarkTroopsNames";
 import { cocHomeHeroes } from "@/constants/coc/cocHeroesNames";
 import { darkSpellNames, normalSpellNames } from "@/constants/coc/cocSpellsNames";
 import { petNames } from "@/constants/coc/petsNames";
+import { siegeMachinesNames } from "@/constants/coc/siegeMachinesNames";
 type Props = Pick<
   CocPlayerType,
   | "troops"
@@ -79,6 +80,16 @@ const getHeroes= (heroes: Hero[]): DisplayTroop[] => {
     return match || { name }; // fallback if not unlocked
   });
 };
+const getSiegeMachines =  (troops: Troop[]): DisplayTroop[] => {
+  return siegeMachinesNames.map((name) => {
+    const match = troops.find(
+      (t) => t.name === name && t.village === "home"
+    );
+
+    return match || { name }; // fallback if not unlocked
+  });
+};
+
 
   return (
     <div className="flex flex-col relative items-center text-center pt-1 bg-gradient-to-t font-ClashBold min-h-[300px] from-[#6a7798] to-[#8c96b1] h-full w-full rounded-[10px] mt-2 pb-5 ">
@@ -147,7 +158,7 @@ const getHeroes= (heroes: Hero[]): DisplayTroop[] => {
             </div>
           </div>
           <div className="w-full max-sm:w-full  h-full rounded-[6px] bg-[#606a8d] sm:mx-0 pb-4 mt-2 flex flex-col items-start justify-center">
-            <p className="p-2 text-white text-[14px]">Heroes</p>
+            <p className="p-2 text-white text-[14px]">Pets</p>
             <div className="flex flex-wrap gap-[6px] px-1">
             {getPetTroops(troops).map((troop) => (
     <CocTroopIcon
@@ -164,7 +175,7 @@ const getHeroes= (heroes: Hero[]): DisplayTroop[] => {
             </div>
           </div>
         </div>
-                <div className="w-[63%] flex flex-col h-full max-sm:w-full">
+                <div className="w-[63%] flex flex-col h-full max-sm:w-full ">
 
         <div className="w-full   h-full rounded-[6px] bg-[#606a8d] sm:mx-2 pb-4 mt-2 flex flex-col items-start justify-center">
           <p className="p-2 text-white text-[14px]">Spells</p>
@@ -197,17 +208,17 @@ const getHeroes= (heroes: Hero[]): DisplayTroop[] => {
           </div>
         </div>
            <div className="w-full max-sm:w-full  h-full rounded-[6px] bg-[#606a8d] sm:mx-2 pb-4 mt-2 flex flex-col items-start justify-center">
-          <p className="p-2 text-white text-[14px]">Spells</p>
+          <p className="p-2 text-white text-[14px]">Siege Machines</p>
           <div className="flex flex-wrap gap-[6px] px-2">
-            {spells.map((spell) => (
-              <CocTroopIcon
-                key={spell.name}
-                level={spell.level}
-                maxLevel={spell.maxLevel}
-                name={spell.name}
-                village={spell.village}
-              />
-            ))}
+            {getSiegeMachines(troops).map((troop) => (
+      <CocTroopIcon
+        key={troop.name}
+        name={troop.name}
+        level={troop.level}
+        maxLevel={troop.maxLevel}
+        village={troop.village}
+      />
+    ))}
           </div>
         </div>
         </div>
