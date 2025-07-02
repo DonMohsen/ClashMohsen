@@ -125,21 +125,21 @@ const sampleTag: Record<GameType, Record<string, string>> = {
       {game===GameType.coc&&
       <div className="flex items-center space-x-2 justify-center">
         <RadioGroupItem value="clan" id="clan" />
-        <Image priority alt="clan" src="/clan.png" width={200} height={200} className="w-6 h-6"/>
+        <Image priority={true} alt="clan" src="/clan.png" width={200} height={200} className="w-6 h-6"/>
         <Label htmlFor="clan">Clan</Label>
       </div>
       }
       {game===GameType.brawlstars&&
         <div className="flex items-center space-x-2 justify-center">
         <RadioGroupItem value="club" id="club" />
-        <Image priority alt="club" src="/club.png" width={200} height={200} className="w-6 h-6"/>
+        <Image priority={true} alt="club" src="/club.png" width={200} height={200} className="w-6 h-6"/>
         <Label htmlFor="club">Club</Label>
       </div>
         }
           {game===GameType.clashroyale&&
         <div className="flex items-center space-x-2 justify-center">
         <RadioGroupItem value="cr-clan" id="cr-clan" />
-        <Image priority alt="clash-royale-clan" src="/clash-royale-clan.png" width={200} height={200} className="w-6 h-6"/>
+        <Image priority={true} alt="clash-royale-clan" src="/clash-royale-clan.png" width={200} height={200} className="w-6 h-6"/>
         <Label htmlFor="cr-clan">Clan</Label>
       </div>
         }

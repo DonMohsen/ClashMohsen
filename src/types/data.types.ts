@@ -1,7 +1,7 @@
 export enum GameType {
   clashroyale = "clash-royale",
   coc = "coc",
-  brawlstars="brawl-stars"
+  brawlstars = "brawl-stars",
 }
 //!COC Res................................................................................................................................
 // types/coc.types.ts
@@ -33,9 +33,24 @@ export interface CocPlayerType {
   playerHouse?: PlayerHouse;
   labels: Label[];
   troops: Troop[];
+  heroes: Hero[];
+  heroEquipment: heroEquipment[];
   spells: Spell[];
 }
+export interface Hero {
+  name: string;
+    village: string;
 
+  level: number;
+  maxLevel: number;
+  equipment?: heroEquipment;
+}
+export interface heroEquipment {
+  name: string;
+  village: string;
+  level: number;
+  maxLevel: number;
+}
 export interface Clan {
   tag: string;
   name: string;
@@ -89,7 +104,7 @@ export interface Achievement {
   target: number;
   info: string;
   completionInfo?: string | null;
-  village: 'home' | 'builderBase' | string;
+  village: "home" | "builderBase" | string;
 }
 
 export interface PlayerHouse {
@@ -97,7 +112,7 @@ export interface PlayerHouse {
 }
 
 export interface HouseElement {
-  type: 'ground' | 'walls' | 'roof' | 'decoration' | string;
+  type: "ground" | "walls" | "roof" | "decoration" | string;
   id: number;
 }
 
@@ -114,14 +129,14 @@ export interface Troop {
   name: string;
   level: number;
   maxLevel: number;
-  village: 'home' | 'builderBase' | string;
+  village: "home" | "builderBase" | string;
 }
 
 export interface Spell {
   name: string;
   level: number;
   maxLevel: number;
-  village: 'home' | 'builderBase' | string;
+  village: "home" | "builderBase" | string;
 }
 //!Clash Royale Player Response Type......................................................................................................
 export interface ClashRoyalePlayerType {
@@ -193,7 +208,7 @@ export interface BaseCard {
   id: number;
   level: number;
   maxLevel: number;
-  rarity: 'common' | 'rare' | 'epic' | 'legendary' | string;
+  rarity: "common" | "rare" | "epic" | "legendary" | string;
   count: number;
   iconUrls: {
     medium: string;
@@ -213,7 +228,8 @@ export interface CurrentDeckCard extends Card {
   maxEvolutionLevel?: number;
 }
 
-export interface FavouriteCard extends Omit<CurrentDeckCard, 'level' | 'count'> {}
+export interface FavouriteCard
+  extends Omit<CurrentDeckCard, "level" | "count"> {}
 
 export interface PathOfLegendSeasonResult {
   leagueNumber: number;
@@ -228,50 +244,50 @@ export interface PathProgress {
 }
 //!Brawl Stars Player Response Type......................................................................................................
 export interface BrawlStarsPlayerType {
-  tag: string
-  name: string
-  nameColor: string
+  tag: string;
+  name: string;
+  nameColor: string;
   icon: {
-    id: number
-  }
-  trophies: number
-  highestTrophies: number
-  expLevel: number
-  expPoints: number
-  isQualifiedFromChampionshipChallenge: boolean
-  "3vs3Victories": number
-  soloVictories: number
-  duoVictories: number
-  bestRoboRumbleTime: number
-  bestTimeAsBigBrawler: number
-  club?: Record<string, unknown> // Could be replaced with proper type if club details are known
-  brawlers: Brawler[]
+    id: number;
+  };
+  trophies: number;
+  highestTrophies: number;
+  expLevel: number;
+  expPoints: number;
+  isQualifiedFromChampionshipChallenge: boolean;
+  "3vs3Victories": number;
+  soloVictories: number;
+  duoVictories: number;
+  bestRoboRumbleTime: number;
+  bestTimeAsBigBrawler: number;
+  club?: Record<string, unknown>; // Could be replaced with proper type if club details are known
+  brawlers: Brawler[];
 }
 
 export interface Brawler {
-  id: number
-  name: string
-  power: number
-  rank: number
-  trophies: number
-  highestTrophies: number
-  gears: Gear[]
-  starPowers: Ability[]
-  gadgets: Ability[]
+  id: number;
+  name: string;
+  power: number;
+  rank: number;
+  trophies: number;
+  highestTrophies: number;
+  gears: Gear[];
+  starPowers: Ability[];
+  gadgets: Ability[];
 }
 
 export interface Gear {
-  id: number
-  name: string
-  level: number
+  id: number;
+  name: string;
+  level: number;
 }
 
 export interface Ability {
-  id: number
-  name: string
+  id: number;
+  name: string;
 }
 
-
-
-
-export type PlayerData = ClashRoyalePlayerType | CocPlayerType | BrawlStarsPlayerType
+export type PlayerData =
+  | ClashRoyalePlayerType
+  | CocPlayerType
+  | BrawlStarsPlayerType;

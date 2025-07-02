@@ -19,5 +19,7 @@ export function formatCustomTag(input: string): string {
 
   const upper = trimmed.toUpperCase();
 
-  return upper;
+  const normalized = upper.replace(/0/g, 'O');
+
+  return normalized;
 }

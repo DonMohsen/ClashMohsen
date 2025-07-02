@@ -3,7 +3,7 @@ import { getPlayerByTag } from '@/actions/getPlayerByTag';
 import { notFound } from 'next/navigation';
 import PlayerStats from '@/components/PlayerStats';
 import { GameType } from '@/types/data.types';
-import CocPlayerStats from '@/components/CocPlayerStats';
+import CocPlayerStats from '@/components/Coc/CocPlayerStats';
 import { Metadata } from 'next';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -34,7 +34,7 @@ const CocSinglePlayerPage =async ({ params }: Props) => {
 
   return (
     
-      <CocPlayerStats player={player} playerTag={playerTag}/>
+      <CocPlayerStats player={player}/>
     
     
   )

@@ -8,7 +8,7 @@ import { BrawlStarsPlayerType, ClashRoyalePlayerType, CocPlayerType, GameType } 
 import BookmarkIcon from './Icons/BookmarkIcon'
 import ClashRoyaleStats from './ClashRoyaleStats'
 import BrawlStarsStats from './BrawlStarsStats'
-import CocPlayerStats from './CocPlayerStats'
+import CocPlayerStats from './Coc/CocPlayerStats'
 
 type PlayerStatsProps = {
   tag: string
