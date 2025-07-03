@@ -1,4 +1,3 @@
-import { CocPlayerType, Hero } from "@/types/data.types";
 import React from "react";
 import ImageKit from "../ImageKit";
 import Image from "next/image";
@@ -9,6 +8,7 @@ import { cocHomeHeroes } from "@/constants/coc/cocHeroesNames";
 import { darkSpellNames, normalSpellNames } from "@/constants/coc/cocSpellsNames";
 import { petNames } from "@/constants/coc/petsNames";
 import { siegeMachinesNames } from "@/constants/coc/siegeMachinesNames";
+import { CocPlayerType, Hero } from "@/types/coc.types";
 type Props = Pick<
   CocPlayerType,
   | "troops"

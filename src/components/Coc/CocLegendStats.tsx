@@ -1,7 +1,7 @@
-import { CocPlayerType } from "@/types/data.types";
 import Image from "next/image";
 import React from "react";
 import TrophyIcon from "../Icons/TrophyIcon";
+import { CocPlayerType } from "@/types/coc.types";
 
 type CocLegendStatsProps = {
   legendStatistics: Exclude<CocPlayerType["legendStatistics"], undefined>;

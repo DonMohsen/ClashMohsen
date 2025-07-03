@@ -1,19 +1,19 @@
 import React from 'react'
-import { getPlayerByTag } from '@/actions/getPlayerByTag';
 import { notFound } from 'next/navigation';
 import PlayerStats from '@/components/PlayerStats';
 import { GameType } from '@/types/data.types';
 import CocPlayerStats from '@/components/Coc/CocPlayerStats';
 import { Metadata } from 'next';
+import { getCocPlayerByTag } from '@/actions/getCocPlayerByTag';
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { tag } = await params
-  const {data:player} = await getPlayerByTag(tag)
+  const {data:player} = await getCocPlayerByTag(tag)
 
   if (!player) return {}
 
   return {
-    title: `${player.name} | Clash of Clans Player Stats`,
+    title: `${player.name} | Clash of Clans`,
     description: `Check out detailed stats for ${player.name} in Clash of Clans, including trophies, wins, and more.`,
   }
 }
@@ -24,7 +24,7 @@ type Props = {
 
 const CocSinglePlayerPage =async ({ params }: Props) => {
     const playerTag = (await params).tag;
-  const {data:player,status}=await getPlayerByTag(playerTag);
+  const {data:player,status}=await getCocPlayerByTag(playerTag);
     if (!player&&status===404) return notFound();
     else if(!player){
       return <p>Error!!!!!!!!!</p>

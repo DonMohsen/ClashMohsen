@@ -9,6 +9,7 @@ import BookmarkIcon from './Icons/BookmarkIcon'
 import ClashRoyaleStats from './ClashRoyaleStats'
 import BrawlStarsStats from './BrawlStarsStats'
 import CocPlayerStats from './Coc/CocPlayerStats'
+import BookmarkToggle from './BookmarkToggle'
 
 type PlayerStatsProps = {
   tag: string
@@ -39,13 +40,13 @@ const [brawlData, setBrawlData] = useState<BrawlStarsPlayerType | null>(null)
   if (error) return <p className="text-red-500">Error: {error.message}</p>
   if (!isLoading && !error && !data) return <p>No data found.</p>
 
-  // const handleToggle = () => {
-  //   if (isBookmarked) {
-  //     remove(tag, game)
-  //   } else {
-  //     addPlayer(tag, game, data!)
-  //   }
-  // }
+  const handleToggle = () => {
+    if (isBookmarked) {
+      remove(tag, game)
+    } else {
+      addPlayer(tag, game, data!)
+    }
+  }
 
   return (
     <div className="bg-white shadow-md rounded-lg p-6 max-w-md mx-auto space-y-4">
@@ -54,6 +55,7 @@ const [brawlData, setBrawlData] = useState<BrawlStarsPlayerType | null>(null)
           className={`w-12 h-12 text-blue-500 ${isBookmarked ? 'fill-blue-500' : ''}`}
         />
       </div> */}
+      <BookmarkToggle isBookmarked={isBookmarked} onToggle={handleToggle}/>
 
       {/* <h2 className="text-2xl font-bold text-center">👤 {data!.name}</h2> */}
 

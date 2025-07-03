@@ -1,5 +1,4 @@
 import React from 'react'
-import { getPlayerByTag } from '@/actions/getPlayerByTag';
 import { notFound } from 'next/navigation';
 import PlayerStats from '@/components/PlayerStats';
 import { GameType } from '@/types/data.types';

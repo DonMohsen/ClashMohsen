@@ -1,4 +1,3 @@
-import { CocPlayerType } from '@/types/data.types';
 import Image from 'next/image';
 import React from 'react'
 type Props = {

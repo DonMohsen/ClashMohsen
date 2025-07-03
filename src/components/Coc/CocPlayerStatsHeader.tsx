@@ -3,9 +3,13 @@ import BookmarkToggle from '../BookmarkToggle'
 import ExpBadge from '../ExpBadge'
 import Image from 'next/image'
 import TrophyIcon from '../Icons/TrophyIcon'
-import { CocPlayerType, GameType } from '@/types/data.types'
+import {  GameType } from '@/types/data.types'
 import { useBookmarkStore } from '@/store/useBookmarkStore'
 import { toast } from 'sonner'
+import { getCorrectRole } from '@/lib/getCorrectRole'
+import { CocPlayerType } from '@/types/coc.types'
+import Link from 'next/link'
+import { formatCustomTag } from '@/lib/format-custom-tag'
 
 
 const CocPlayerStatsHeader = ({player}:{player:CocPlayerType}) => {
@@ -74,7 +78,9 @@ onClick: (_event: React.MouseEvent<HTMLButtonElement>, toastId?: string | number
             </div>
             <div className="flex items-center justify-start w-full gap-2 px-2 pt-1 font-ClashBold">
               {clan ? (
-                <div className="flex items-center w-full gap-1 justify-start  ">
+                <Link
+                href={`/coc/clan/${formatCustomTag(clan.tag)}`}
+                className="flex items-center w-full gap-1 justify-start  ">
                   {clan.badgeUrls.small && (
                     <Image
                       src={clan.badgeUrls.small}
@@ -91,9 +97,9 @@ onClick: (_event: React.MouseEvent<HTMLButtonElement>, toastId?: string | number
                     >
                       {clan.name}
                     </p>
-                    <p className="text-sm text-gray-500">{role}</p>
+                    <p className="text-sm text-gray-500">{getCorrectRole( role!)}</p>
                   </div>
-                </div>
+                </Link>
               ) : (
                 <div className="flex items-center w-full gap-1 justify-start  ">
                   <Image

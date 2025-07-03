@@ -1,4 +1,4 @@
-import { CocPlayerType } from "@/types/data.types";
+import { CocPlayerType } from "@/types/coc.types";
 import { cache } from "react";
 
 interface GetPlayerByTagResponse {
@@ -6,7 +6,7 @@ interface GetPlayerByTagResponse {
   status: number;
 }
 
-export const getPlayerByTag = cache(async (tag: string): Promise<GetPlayerByTagResponse> => {
+export const getCocPlayerByTag = cache(async (tag: string): Promise<GetPlayerByTagResponse> => {
   const apiToken = process.env.COC_API_KEY;
 
   if (!apiToken) {
