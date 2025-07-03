@@ -97,7 +97,7 @@ const CocLegendStats = ({ legendStatistics }: CocLegendStatsProps) => {
                 Previous:
               </p>
               <div className="flex flex-col w-full items-start justify-center text-white  font-ClashRegular  text-[10px] ">
-                <p className="text-[12px]">Did not placed</p>
+                <p className="text-[12px]">Did not place</p>
               </div>
             </div>
           </div>
