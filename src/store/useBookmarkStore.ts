@@ -3,9 +3,10 @@ import { persist, createJSONStorage } from 'zustand/middleware'
 import {
   ClashRoyalePlayerType,
   GameType,
-  CocPlayerType,
-  PlayerData,
+  
+
 } from '@/types/data.types'
+import { PlayerData } from '@/types/general.types'
 
 export interface StoredPlayer {
   tag: string

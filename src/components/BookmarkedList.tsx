@@ -7,10 +7,10 @@ import { cn } from "@/lib/utils";
 import {
   BrawlStarsPlayerType,
   ClashRoyalePlayerType,
-  CocPlayerType,
   GameType,
 } from "@/types/data.types";
 import Image from "next/image";
+import { CocPlayerType } from "@/types/coc.types";
 
 const BookmarkedList = () => {
   const players = useBookmarkStore((s) => s.players);

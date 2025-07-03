@@ -1,4 +1,3 @@
-import { CocPlayerType } from "./coc.types";
 
 export enum GameType {
   clashroyale = "clash-royale",
@@ -156,8 +155,3 @@ export interface Ability {
   id: number;
   name: string;
 }
-
-export type PlayerData =
-  | ClashRoyalePlayerType
-  | CocPlayerType
-  | BrawlStarsPlayerType;

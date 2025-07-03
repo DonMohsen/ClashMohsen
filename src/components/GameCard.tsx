@@ -35,7 +35,7 @@ const GameCard = ({ game }: { game: GameType }) => {
 
     // Your actual game selection logic can go here
     // handleSetGame(game)
-  }, [controls,selectedGame]);
+  }, [controls,selectedGame,game]);
   const [searchMode, setSearchMode] = useState<"player" | "clan"|"club"|"cr-clan">("player");
 const sampleTag: Record<GameType, Record<string, string>> = {
   [GameType.coc]: {

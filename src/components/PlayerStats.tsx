@@ -4,12 +4,13 @@ import React, { useEffect, useState } from 'react'
 import { usePlayerByTag } from '@/hooks/usePlayerByTag'
 import { useBookmarkStore } from '@/store/useBookmarkStore'
 import ExpBadge from './ExpBadge'
-import { BrawlStarsPlayerType, ClashRoyalePlayerType, CocPlayerType, GameType } from '@/types/data.types'
+import { BrawlStarsPlayerType, ClashRoyalePlayerType, GameType } from '@/types/data.types'
 import BookmarkIcon from './Icons/BookmarkIcon'
 import ClashRoyaleStats from './ClashRoyaleStats'
 import BrawlStarsStats from './BrawlStarsStats'
 import CocPlayerStats from './Coc/CocPlayerStats'
 import BookmarkToggle from './BookmarkToggle'
+import { CocPlayerType } from '@/types/coc.types'
 
 type PlayerStatsProps = {
   tag: string

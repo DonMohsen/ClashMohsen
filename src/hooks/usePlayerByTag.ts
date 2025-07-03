@@ -4,11 +4,10 @@ import { useCallback, useEffect, useState } from 'react'
 import axios from 'axios'
 import {
   ClashRoyalePlayerType,
-  CocPlayerType,
   GameType,
-  PlayerData
 } from '@/types/data.types'
 import { useBookmarkStore } from '@/store/useBookmarkStore'
+import { PlayerData } from '@/types/general.types'
 
 // Define a union of both player types
 
