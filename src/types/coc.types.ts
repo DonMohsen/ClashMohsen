@@ -159,8 +159,14 @@ export interface CocClanType {
   requiredBuilderBaseTrophies: number
   requiredTownhallLevel: number
   clanCapital: CoCClanCapital
+   chatLanguage?:CocChatLanguage
 }
 
+export interface CocChatLanguage{
+  name:string
+  id:number
+  languageCode:string
+}
 export interface CoCLocation {
   id: number
   name: string
