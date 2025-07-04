@@ -9,29 +9,30 @@ import { toast } from 'sonner'
 import { getCorrectRole } from '@/lib/getCorrectRole'
 import { CocPlayerType } from '@/types/coc.types'
 import Link from 'next/link'
-import { formatCustomTag } from '@/lib/format-custom-tag'
+import { getCorrectCocClanTag, getCorrectCocPlayerTag } from '@/lib/format-custom-tag'
+import { CocPlayerPick, TagType } from '@/types/general.types'
 
 
 const CocPlayerStatsHeader = ({player}:{player:CocPlayerType}) => {
-    const{attackWins,bestTrophies,defenseWins,donations,donationsReceived,expLevel,labels,trophies,warStars,tag,name,clan,league,role}=player
+    const{attackWins,bestTrophies,defenseWins,donations,donationsReceived,expLevel,labels,trophies,warStars,tag,name,clan,league,role,townHallLevel,townHallWeaponLevel}=player
       const game = GameType.coc;
-  const players = useBookmarkStore((s) => s.players);
+  const bookmarks = useBookmarkStore((s) => s.bookmarks);
 
-  const addPlayer = useBookmarkStore((s) => s.addPlayer);
-  const remove = useBookmarkStore((s) => s.removePlayer);
+  const addBookmark = useBookmarkStore((s) => s.addBookmark);
+  const removeBookmark = useBookmarkStore((s) => s.removeBookmark);
 
 const normalizedTag = (tag.startsWith('#') ? tag.slice(1) : tag).replace(/0/g, 'O');
   
   
-  const isBookmarked = players.some(
-      (p) => p.tag === normalizedTag && p.game === game
+  const isBookmarked = bookmarks.some(
+      (b) => b.tag === normalizedTag && b.game === game
     );
     
     const handleToggle = () => {
     console.log(normalizedTag);
   if (isBookmarked) {
     
-    remove(normalizedTag, game);
+    removeBookmark(normalizedTag, game,TagType.player);
   toast.success('Removed from bookmark list!', {
   action: {
     label: '×', // Close button text
@@ -40,7 +41,7 @@ onClick: (_event: React.MouseEvent<HTMLButtonElement>, toastId?: string | number
 }
   },
 });  } else {
-    addPlayer(normalizedTag, game, player);
+    addBookmark(normalizedTag, game, player,TagType.player);
    toast.success('Added to bookmark list!', {
   action: {
     label: '×', // Close button text
@@ -52,11 +53,12 @@ onClick: (_event: React.MouseEvent<HTMLButtonElement>, toastId?: string | number
 
   }
 };
+  const cocPicked:CocPlayerPick={expLevel:expLevel,name:name,tag:tag,townHallLevel:townHallLevel,townHallWeaponLevel:townHallWeaponLevel}
 
   return (
  <div className="flex flex-col relative items-center text-center pt-1 bg-[#839bde] h-full w-full rounded-[10px] ">
         <div className="absolute top-0 right-0 ">
-          <BookmarkToggle isBookmarked={isBookmarked} onToggle={handleToggle} />
+          <BookmarkToggle tag={getCorrectCocPlayerTag(player.tag)} game={GameType.coc} data={cocPicked} tagType={TagType.player} />
         </div>
         <div className="flex  flex-row max-md:flex-col w-full h-full ">
           {/* //! The Left side of header */}
@@ -79,7 +81,7 @@ onClick: (_event: React.MouseEvent<HTMLButtonElement>, toastId?: string | number
             <div className="flex items-center justify-start w-full gap-2 px-2 pt-1 font-ClashBold">
               {clan ? (
                 <Link
-                href={`/coc/clan/${formatCustomTag(clan.tag)}`}
+                href={`/coc/clan/${getCorrectCocClanTag(clan.tag)}`}
                 className="flex items-center w-full gap-1 justify-start  ">
                   {clan.badgeUrls.small && (
                     <Image

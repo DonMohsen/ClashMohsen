@@ -10,10 +10,11 @@ import {
   GameType,
 } from "@/types/data.types";
 import Image from "next/image";
-import { CocPlayerType } from "@/types/coc.types";
+import { CocClanType, CocPlayerType } from "@/types/coc.types";
+import { CocClanPick, CocPlayerPick, TagType } from "@/types/general.types";
 
 const BookmarkedList = () => {
-  const players = useBookmarkStore((s) => s.players);
+  const bookmarks = useBookmarkStore((s) => s.bookmarks);
   const isLoading = useBookmarkStore((s) => s.isLoading);
   return (
     <div className="font-ClashBold flex flex-col gap-5">
@@ -22,31 +23,31 @@ const BookmarkedList = () => {
           loadinggggggggggggggggggg
         </div>
       )}
-      {!players.length && (
+      {!bookmarks.length && (
         <p className="py-5 text-center max-sm:text-[12px] text-yellow-500">
           use the golden bookmark option on top of the players profiles, to
           bookmark them!
         </p>
       )}
 
-      {players.map((player) => {
-        const { tag, game, data } = player;
+      {bookmarks.map((bookmark) => {
+        const { tag, game, data,tagType } = bookmark;
 
         return (
           <Link
             key={tag}
-            href={`/${game}/Player/${tag}`}
+            href={`/${game}/${tagType}/${tag}`}
             className={cn(
               "flex items-center gap-2 justify-start w-full bg-rose-50"
               // game === GameType.coc ? "bg-green-500" : "bg-black"
             )}
           >
             {/* Shared field */}
-            <ExpBadge expLevel={data.expLevel} />
 
             {/* Narrowing by game */}
-            {game === GameType.coc && (
+            {game === GameType.coc && tagType===TagType.player&& (
               <>
+              <ExpBadge expLevel={(data as CocPlayerType).expLevel} />
                 {/* TypeScript now knows this is CocPlayerType */}
                 <Image
                   alt="townhall"
@@ -59,12 +60,29 @@ const BookmarkedList = () => {
                   height={600}
                   className="w-14 h-14 "
                 />
-                <span>{(data as CocPlayerType).name}</span>
+                <span>{(data as CocPlayerPick).name}</span>
+              </>
+            )}
+             {game === GameType.coc && tagType===TagType.clan&& (
+              <>
+              {/* <ExpBadge expLevel={(data as CocPlayerType).expLevel} /> */}
+                {/* TypeScript now knows this is CocPlayerType */}
+                <Image
+                  alt="clan-badge"
+                  src={(data as CocClanPick).badgeUrls.small}
+                  width={600}
+                  height={600}
+                  className="w-14 h-14 "
+                />
+                <div>{(data as CocClanPick).location.name}</div>
+                <span>{(data as CocClanPick).name}</span>
               </>
             )}
 
             {game === GameType.clashroyale && (
               <>
+
+                            <ExpBadge expLevel={(data as ClashRoyalePlayerType).expLevel} />
                 {/* ClashRoyalePlayerType */}
                 <Image
                   alt="league"
@@ -80,7 +98,10 @@ const BookmarkedList = () => {
 
             {game === GameType.brawlstars && (
               <>
+
                 {/* BrawlStarsPlayerType */}
+                              <ExpBadge expLevel={(data as BrawlStarsPlayerType).expLevel} />
+
                 <span>{(data as BrawlStarsPlayerType).name}</span>
                 <span>Trophies: {(data as BrawlStarsPlayerType).trophies}</span>
               </>

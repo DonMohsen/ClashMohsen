@@ -4,19 +4,40 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BookmarkIcon } from "lucide-react";
 import { TiPlus } from "react-icons/ti";
+import { useBookmarkStore } from "@/store/useBookmarkStore";
+import { GameType } from "@/types/data.types";
+import { BookmarkedType, TagType } from "@/types/general.types";
 
 type BookmarkToggleProps = {
-  isBookmarked: boolean;
-  onToggle: () => void;
+  // isBookmarked: boolean;
+  // onToggle: () => void;
+  tag:string
+  game:GameType
+  data:BookmarkedType
+  tagType:TagType
 };
 
 const BookmarkToggle: React.FC<BookmarkToggleProps> = ({
-  isBookmarked,
-  onToggle,
+tag,
+game,
+data,
+tagType
 }) => {
+
+    const bookmarks = useBookmarkStore((s) => s.bookmarks)
+  const addBookmark = useBookmarkStore((s) => s.addBookmark)
+  const removeBookmark = useBookmarkStore((s) => s.removeBookmark)
+  const isBookmarked = bookmarks.some((b) => b.tag === tag && b.game === game)
+   const handleToggle = () => {
+    if (isBookmarked) {
+      removeBookmark(tag, game,tagType)
+    } else {
+      addBookmark(tag, game, data!,tagType)
+    }
+  }
   return (
    <motion.div
-  onClick={onToggle}
+  onClick={handleToggle}
   className="cursor-pointer relative inline-block transition-colors top-0 right-3 max-md:right-1"
   whileTap={{ scale: 0.8 }}
   transition={{ type: "tween", duration: 0.1 }} // Instant feedback

@@ -9,8 +9,10 @@ import { Button } from "./ui/button";
 import { Search } from "lucide-react";
 import { motion } from "framer-motion";
 import GameSelectBadge from "./GameSelectBadge";
-import { formatCustomTag } from "@/lib/format-custom-tag";
 import clsx from "clsx";
+import { getCorrectCocClanTag, getCorrectCocPlayerTag } from "@/lib/format-custom-tag";
+import { useTagTypeStore } from "@/store/useTagTypeStore";
+import { TagType } from "@/types/general.types";
 
 const SEARCH_KEY = "recentSearches"; // key for localStorage
 
@@ -21,7 +23,7 @@ export default function SearchBar() {
   const [showSuggestions, setShowSuggestions] = useState(false);
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
-
+  const{tagType}=useTagTypeStore()
   // Load saved searches from localStorage
   useEffect(() => {
     const saved = localStorage.getItem(SEARCH_KEY);
@@ -40,19 +42,21 @@ export default function SearchBar() {
     setSuggestions(updated);
   };
 
+    const cocAndClashRoyalePlayerUrl=`/${game}/${TagType.player}/${getCorrectCocPlayerTag(input)}`;
+    const cocAndClashRoyaleClanUrl=`/${game}/${TagType.clan}/${getCorrectCocClanTag(input)}`;
+    const dynamicUrl=tagType===TagType.clan?cocAndClashRoyaleClanUrl:cocAndClashRoyalePlayerUrl;
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
     const trimmed = input.trim().toUpperCase();
     if (trimmed) {
       saveSearch(trimmed);
-      router.push(`/${game}/Player/${formatCustomTag(input)}`);
+      router.push(dynamicUrl);
     }
   };
-
   const handleSuggestionClick = (tag: string) => {
     setInput(tag);
     saveSearch(tag);
-    router.push(`/${game}/Player/${formatCustomTag(tag)}`);
+    router.push(`/${game}/player/${getCorrectCocPlayerTag(tag)}`);
     setShowSuggestions(false);
   };
 

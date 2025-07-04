@@ -10,7 +10,7 @@
  * @param input - Raw input string (e.g., '#hello')
  * @returns Formatted string (e.g., '%29HELLO')
  */
-export function formatCustomTag(input: string): string {
+export function getCorrectCocPlayerTag(input: string): string {
   let trimmed = input.trim();
 
   if (trimmed.startsWith('#')) {
@@ -22,4 +22,15 @@ export function formatCustomTag(input: string): string {
   const normalized = upper.replace(/0/g, 'O');
 
   return normalized;
+}
+export function getCorrectCocClanTag(input: string): string {
+  let trimmed = input.trim();
+
+  if (trimmed.startsWith('#')) {
+    trimmed = trimmed.slice(1);
+  }
+
+  const upper = trimmed.toUpperCase();
+
+  return upper;
 }

@@ -7,23 +7,23 @@ import {
   GameType,
 } from '@/types/data.types'
 import { useBookmarkStore } from '@/store/useBookmarkStore'
-import { PlayerData } from '@/types/general.types'
+import { BookmarkedType } from '@/types/general.types'
 
 // Define a union of both player types
 
 export function usePlayerByTag(tag: string, game: GameType) {
-  const [data, setData] = useState<PlayerData | null>(null)
+  const [data, setData] = useState<BookmarkedType | null>(null)
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<Error | null>(null)
 
-  const addToStore = useBookmarkStore((s) => s.addPlayer)
-  const removeFromStore = useBookmarkStore((s) => s.removePlayer)
-  const getPlayer = useBookmarkStore((s) => s.getPlayer)
+  const addBookmark = useBookmarkStore((s) => s.addBookmark)
+  const removeBookmark = useBookmarkStore((s) => s.removeBookmark)
+  const getBookmark = useBookmarkStore((s) => s.getBookmark)
 
   useEffect(() => {
     if (!tag || !game) return
 
-    const cached = getPlayer(tag, game)
+    const cached = getBookmark(tag, game)
     if (cached) {
       setData(cached)
       setIsLoading(false)
@@ -34,7 +34,7 @@ export function usePlayerByTag(tag: string, game: GameType) {
     setError(null)
 
     axios
-      .get<PlayerData>(`/api/${game}/player/${tag}`)
+      .get<BookmarkedType>(`/api/${game}/player/${tag}`)
       .then((res) => {
         setData(res.data)
       })
@@ -43,15 +43,15 @@ export function usePlayerByTag(tag: string, game: GameType) {
         setData(null)
       })
       .finally(() => setIsLoading(false))
-  }, [tag, game,getPlayer])
+  }, [tag, game,getBookmark])
 
   const addPlayer = useCallback(() => {
-    if (data) addToStore(tag, game, data)
-  }, [data, tag, game, addToStore])
+    if (data) addBookmark(tag, game, data)
+  }, [data, tag, game, addBookmark])
 
   const removePlayer = useCallback(() => {
-    removeFromStore(tag, game)
-  }, [tag, game, removeFromStore])
+    removeBookmark(tag, game)
+  }, [tag, game, removeBookmark])
 
   return {
     data,

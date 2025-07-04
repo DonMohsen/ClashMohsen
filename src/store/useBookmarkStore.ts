@@ -6,52 +6,55 @@ import {
   
 
 } from '@/types/data.types'
-import { PlayerData } from '@/types/general.types'
+import { BookmarkedType, TagType } from '@/types/general.types'
 
-export interface StoredPlayer {
+export interface StoredBookmark {
   tag: string
   game: GameType
-  data: PlayerData
+  data: BookmarkedType
+  tagType:TagType
+  
 }
 
-interface PlayerStore {
-  players: StoredPlayer[]
+interface BookmarkedStore {
+  bookmarks: StoredBookmark[]
   isLoading: boolean
-  addPlayer: (tag: string, game: GameType, data: PlayerData) => Promise<void>
-  removePlayer: (tag: string, game: GameType) => Promise<void>
-  getPlayer: (tag: string, game: GameType) => PlayerData | undefined
+  addBookmark: (tag: string, game: GameType, data: BookmarkedType,tagType:TagType) => Promise<void>
+  removeBookmark: (tag: string, game: GameType,tagType:TagType) => Promise<void>
+  getBookmark: (tag: string, game: GameType,tagType:TagType) => BookmarkedType | undefined
   setLoading: (loading: boolean) => void
 }
 
-export const useBookmarkStore = create<PlayerStore>()(
+export const useBookmarkStore = create<BookmarkedStore>()(
   persist(
     (set, get) => ({
-      players: [],
+      bookmarks: [],
       isLoading: false,
       setLoading: (loading) => set({ isLoading: loading }),
 
-      addPlayer: async (tag, game, data) => {
-        set({ isLoading: true })
-        try {
-          const exists = get().players.some(
-            (p) => p.tag === tag && p.game === game
-          )
-          if (!exists) {
-            set((state) => ({
-              players: [...state.players, { tag, game, data }],
-            }))
-          }
-        } finally {
-          set({ isLoading: false })
-        }
-      },
+    addBookmark: async (tag, game, data, tagType) => {
+  set({ isLoading: true })
+  try {
+    const exists = get().bookmarks.some(
+      (b) => b.tag === tag && b.game === game && b.tagType === tagType // include tagType in check
+    )
+    if (!exists) {
+      set((state) => ({
+        bookmarks: [...state.bookmarks, { tag, game, data, tagType }],
+      }))
+    }
+  } finally {
+    set({ isLoading: false })
+  }
+},
 
-      removePlayer: async (tag, game) => {
+
+      removeBookmark: async (tag, game) => {
         set({ isLoading: true })
         try {
           set((state) => ({
-            players: state.players.filter(
-              (p) => !(p.tag === tag && p.game === game)
+            bookmarks: state.bookmarks.filter(
+              (b) => !(b.tag === tag && b.game === game)
             ),
           }))
         } finally {
@@ -59,9 +62,9 @@ export const useBookmarkStore = create<PlayerStore>()(
         }
       },
 
-      getPlayer: (tag, game) => {
-        return get().players.find(
-          (p) => p.tag === tag && p.game === game
+      getBookmark: (tag, game) => {
+        return get().bookmarks.find(
+          (b) => b.tag === tag && b.game === game
         )?.data
       },
     }),
