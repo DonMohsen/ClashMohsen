@@ -7,7 +7,7 @@ import {
   GameType,
 } from '@/types/data.types'
 import { useBookmarkStore } from '@/store/useBookmarkStore'
-import { BookmarkedType } from '@/types/general.types'
+import { BookmarkedType, TagType } from '@/types/general.types'
 
 // Define a union of both player types
 
@@ -23,7 +23,7 @@ export function usePlayerByTag(tag: string, game: GameType) {
   useEffect(() => {
     if (!tag || !game) return
 
-    const cached = getBookmark(tag, game)
+    const cached = getBookmark(tag, game,TagType.player)
     if (cached) {
       setData(cached)
       setIsLoading(false)
@@ -46,11 +46,11 @@ export function usePlayerByTag(tag: string, game: GameType) {
   }, [tag, game,getBookmark])
 
   const addPlayer = useCallback(() => {
-    if (data) addBookmark(tag, game, data)
+    if (data) addBookmark(tag, game, data,TagType.player)
   }, [data, tag, game, addBookmark])
 
   const removePlayer = useCallback(() => {
-    removeBookmark(tag, game)
+    removeBookmark(tag, game,TagType.player)
   }, [tag, game, removeBookmark])
 
   return {
