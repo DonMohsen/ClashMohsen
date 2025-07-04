@@ -38,7 +38,7 @@ const BookmarkedList = () => {
             key={tag}
             href={`/${game}/${tagType}/${tag}`}
             className={cn(
-              "flex items-center gap-2 justify-start w-full bg-rose-50"
+              "flex items-center gap-2 justify-start w-full "
               // game === GameType.coc ? "bg-green-500" : "bg-black"
             )}
           >
@@ -72,9 +72,9 @@ const BookmarkedList = () => {
                   src={(data as CocClanPick).badgeUrls.small}
                   width={600}
                   height={600}
-                  className="w-14 h-14 "
+                  className="w-12 h-12 "
                 />
-                <div>{(data as CocClanPick).location.name}</div>
+                <Image alt="cwl-league" src={`/${(data as CocClanPick).warLeague.name}.png`} width={200} height={200} className="w-14 h-14"/>
                 <span>{(data as CocClanPick).name}</span>
               </>
             )}

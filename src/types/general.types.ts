@@ -7,7 +7,7 @@ import type { CocPlayerType, CocClanType } from "./coc.types";
 export type ClashRoyalePick = Pick<ClashRoyalePlayerType, "name" | "currentPathOfLegendSeasonResult"|"expLevel"|"tag">;
 export type CocPlayerPick = Pick<CocPlayerType, "name" | "expLevel"|"townHallLevel"|"townHallWeaponLevel"|"tag">;
 export type BrawlStarsPick = Pick<BrawlStarsPlayerType, "name" | "tag">;
-export type CocClanPick = Pick<CocClanType, "name" | "tag"|"badgeUrls"|"location">;
+export type CocClanPick = Pick<CocClanType, "name" | "tag"|"badgeUrls"|"location"|"warLeague">;
 
 export type BookmarkedType =
   | ClashRoyalePick
