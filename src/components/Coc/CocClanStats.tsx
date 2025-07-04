@@ -83,7 +83,7 @@ const CocClanStats: React.FC<Props> = ({ clan }) => {
               </p>
               <div className="mt-5 mb-2 flex gap-4 items-end  justify-start w-full h-full  ">
               {clan.labels.map((label)=>(
-                <Image alt="label" src={label.iconUrls.small} width={200} height={200} className="w-8 h-8"/>
+                <Image key={label.id} alt="label" src={label.iconUrls.small} width={200} height={200} className="w-8 h-8"/>
               ))}
               </div>
             </div>
